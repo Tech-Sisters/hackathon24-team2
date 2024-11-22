@@ -9,6 +9,14 @@ import {
   CardMedia,
   CardActions,
 } from "@mui/material";
+
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import HomeIcon from "@mui/icons-material/Home";
+import EventIcon from "@mui/icons-material/Event";
+import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
+import PersonIcon from "@mui/icons-material/Person";
+
 export default function Landing() {
   const generateCalendarDates = () => {
     const today = new Date(); // Get current date
@@ -73,6 +81,28 @@ export default function Landing() {
           </Grid>
         ))}
       </Grid>
+      <Paper
+        sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
+        elevation={3}
+      >
+        <BottomNavigation
+          showLabels
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+          sx={{
+            "& .MuiBottomNavigationAction.Mui-selected": {
+              color: "black", // Apply black color to all selected icons
+            },
+          }}
+        >
+          <BottomNavigationAction label="Home" icon={<HomeIcon />} />
+          <BottomNavigationAction label="Favorites" icon={<ChatBubbleIcon />} />
+          <BottomNavigationAction label="Archive" icon={<EventIcon />} />
+          <BottomNavigationAction label="Archive" icon={<PersonIcon />} />
+        </BottomNavigation>
+      </Paper>
     </div>
   );
 }
