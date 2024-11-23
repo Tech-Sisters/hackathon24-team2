@@ -4,10 +4,8 @@ import {
   Box,
   Paper,
   Typography,
-  Button,
   Card,
   CardMedia,
-  CardActions,
   IconButton,
 } from "@mui/material";
 
@@ -17,10 +15,6 @@ import HomeIcon from "@mui/icons-material/Home";
 import EventIcon from "@mui/icons-material/Event";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import PersonIcon from "@mui/icons-material/Person";
-import { styled } from "@mui/material/styles";
-import CardHeader from "@mui/material/CardHeader";
-
-import CardContent from "@mui/material/CardContent";
 import feelingTodayImage from "./media/feeling_today.jpg";
 import chatMaiaImage from "./media/chat_maia.jpg";
 import ayaImage from "./media/aya_hadith.jpg";
@@ -315,10 +309,10 @@ export default function Landing() {
             display: "block", // Hide bottom nav on medium and larger screens
           }}
         >
-          <BottomNavigationAction label="Home" icon={<HomeIcon />} />
-          <BottomNavigationAction label="Favorites" icon={<ChatBubbleIcon />} />
-          <BottomNavigationAction label="Archive" icon={<EventIcon />} />
-          <BottomNavigationAction label="Archive" icon={<PersonIcon />} />
+          <BottomNavigationAction icon={<HomeIcon />} />
+          <BottomNavigationAction icon={<ChatBubbleIcon />} />
+          <BottomNavigationAction icon={<EventIcon />} />
+          <BottomNavigationAction icon={<PersonIcon />} />
         </BottomNavigation>
       </Paper>
     </div>
