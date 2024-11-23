@@ -9,13 +9,16 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 {
   /*import ChatBot from "./Chatbot";*/
 }
+import Chatbot from "./Chatbot";
+
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
-      {/*<h1>Team 2</h1>
+      {/*{/* <h1>Team 2</h1>
       <Button variant="contained">Contained</Button> */}
+      <Chatbot /> */}
       <Router>
         <div>
           <Landing />
