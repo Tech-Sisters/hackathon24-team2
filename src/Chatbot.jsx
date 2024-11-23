@@ -31,6 +31,17 @@ export default function Chatbot() {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+      <Box
+        sx={{
+          height: "20vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h1"> MAIA</Typography>
+      </Box>
       {/* Maia Header */}
       <Box
         sx={{
@@ -66,7 +77,7 @@ export default function Chatbot() {
           placeholder="Type a message..."
         />
 
-        <button className="send-button" onClick={handleSendMessage}>
+        <button className="send-button" onClick={sendMessage}>
           Send
         </button>
       </Box>
