@@ -30,10 +30,18 @@ export default function Chatbot() {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+    <Box
+      sx={{
+        height: "100vh",
+        width: "100vw",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <Box
         sx={{
-          height: "20vh",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -45,13 +53,16 @@ export default function Chatbot() {
       {/* Maia Header */}
       <Box
         sx={{
-          backgroundColor: "#6200ea",
           padding: "16px",
           textAlign: "center",
-          color: "#fff",
+          color: "black",
           fontSize: "24px",
           fontWeight: "bold",
           flexShrink: 0,
+
+          display: "flex",
+          justifyContent: "center",
+          margin: "10px",
         }}
       >
         Maia Chatbot
@@ -65,6 +76,7 @@ export default function Chatbot() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          margin: "10px",
         }}
       >
         <TextField
