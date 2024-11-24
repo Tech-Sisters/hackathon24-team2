@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import { Box } from "@mui/material";
 
 export default function Home(){
-  return (<Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+  return (
+    <>
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }} />
       {/* Maia Header */}
       <Box sx={{
         backgroundColor: '#6200ea',
@@ -12,7 +14,7 @@ export default function Home(){
         fontWeight: 'bold',
         flexShrink: 0
       }}>
-        Maia Chatbot
+        {`Maia Chatbot`}
       </Box>
       {/* Chat Area */}
       <Box sx={{
@@ -22,6 +24,7 @@ export default function Home(){
         backgroundColor: '#f1f1f1',
         display: 'flex',
         flexDirection: 'column',
-      }}></Box>
+      }} />
+      </>
 );
 }

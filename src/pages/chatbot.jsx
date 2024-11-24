@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 
 import {
   Box,
   Typography,
   TextField,
-  Button,
-  Paper,
-  IconButton,
-  Container,
 } from "@mui/material";
 
 export default function Chatbot() {
