@@ -5,7 +5,10 @@ import "./App.css";
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Landing from "./Landing";
-
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+{
+  /*import ChatBot from "./Chatbot";*/
+}
 function App() {
   const [count, setCount] = useState(0);
 
@@ -13,7 +16,14 @@ function App() {
     <>
       {/*<h1>Team 2</h1>
       <Button variant="contained">Contained</Button> */}
-      <Landing />
+      <Router>
+        <div>
+          <Landing />
+          <Routes>
+            <Route path="/home" element={<Landing />} />
+          </Routes>
+        </div>
+      </Router>
     </>
   );
 }

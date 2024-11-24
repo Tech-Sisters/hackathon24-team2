@@ -79,6 +79,7 @@ export default function Landing() {
 
     return dates.reverse();
   };
+
   return (
     <div>
       <Box
