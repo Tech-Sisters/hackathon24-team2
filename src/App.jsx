@@ -8,8 +8,6 @@ import FeelingPage from "./components/feelingPage";
 import EmotionPage from "./components/emotionPage";
 import ActivitiesPage from "./components/activitiesPage";
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
       <Router>

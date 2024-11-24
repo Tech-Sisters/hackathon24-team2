@@ -9,7 +9,6 @@ for (const path in modules) {
   const iconName = path.split("/").pop().replace(".svg", "");
   icons[iconName] = modules[path].default;
 }
-console.log(icons);
 const activitiesStyles = css`
   display: flex;
   justify-content: center;
