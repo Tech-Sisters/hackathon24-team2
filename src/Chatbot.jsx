@@ -89,6 +89,42 @@ export default function Chatbot() {
       >
         Maia Chatbot
       </Box>
+      {/* Chat Response Presented */}
+      <Box
+        sx={{
+          height: "60vh", // Adjust height as needed
+          width: "80vw", // Adjust width as needed
+          overflowY: "auto",
+          border: "1px solid #ccc",
+          borderRadius: "8px",
+          padding: "16px",
+          margin: "10px",
+          backgroundColor: "#fff", // Background for chat area
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        {messages.map((message, index) => (
+          <Box
+            key={index}
+            sx={{
+              textAlign: message.sender === "user" ? "right" : "left",
+              margin: "10px",
+              padding: "8px",
+              borderRadius: "8px",
+              backgroundColor:
+                message.sender === "user" ? "#e0f7fa" : "#fce4ec",
+              alignSelf: message.sender === "user" ? "flex-end" : "flex-start",
+              maxWidth: "70%",
+            }}
+          >
+            <Typography variant="body1">
+              <strong>{message.sender}:</strong> {message.text}
+            </Typography>
+          </Box>
+        ))}
+      </Box>
+
       {/* Chat Input Area */}
       <Box
         sx={{
