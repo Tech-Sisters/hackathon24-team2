@@ -1,15 +1,5 @@
 import * as React from "react";
-import Grid from "@mui/material/Grid2";
-import {
-  Box,
-  Paper,
-  Typography,
-  Card,
-  CardMedia,
-  IconButton,
-  AppBar,
-  Toolbar,
-} from "@mui/material";
+
 
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -24,6 +14,7 @@ import ayaImage from "../media/aya_hadith.jpg";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import HeaderMain from "../components/Landing/headerMain";
+import CalendarStrip from "../components/Landing/calendar";
 
 const carouselImages = [ayaImage, feelingTodayImage];
 
@@ -61,30 +52,11 @@ export default function Landing() {
     return () => clearInterval(interval); // Clean up interval on unmount
   }, []);
 
-  const generateCalendarDates = () => {
-    const today = new Date(); // Get current date
-    const dates = [];
-
-    // Loop to create the next 10 days
-    for (let i = 0; i < 10; i++) {
-      const currentDate = new Date(today);
-      currentDate.setDate(today.getDate() - i); // Set the date to current date + i
-
-      const dayOfWeek = currentDate.toLocaleString("en-US", {
-        weekday: "short",
-      }); // Get the first 3 letters of the day of the week
-      const dayOfMonth = currentDate.getDate(); // Get the day of the month
-
-      // Store both the day of the week and the date
-      dates.push({ dayOfWeek, dayOfMonth });
-    }
-
-    return dates.reverse();
-  };
 
   return (
     <div>
        <HeaderMain />
+       <CalendarStrip />
        
       {/*
       <Grid container spacing={1} sx={{ padding: 2, flexDirection: "column" }}>
