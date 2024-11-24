@@ -15,18 +15,40 @@ export default function Chatbot() {
     { sender: "bot", text: "Hello, I am Maia. How can I assist you today?" },
   ]);
   const [userInput, setUserInput] = useState("");
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (userInput.trim()) {
-      const newMessage = { sender: "user", text: userInput };
-      setMessages([...messages, newMessage]);
+      // Add user message to the messages list
+      const userMessage = { sender: "user", text: userInput };
+      setMessages((prevMessages) => [...prevMessages, userMessage]);
 
-      // Simulating a bot response after the user sends a message
-      setTimeout(() => {
-        const botResponse = { sender: "bot", text: "I am here to help you!" }; // Customize your bot response
+      // Clear the input field
+      setUserInput("");
+
+      try {
+        // Send the user's message to the backend
+        const response = await fetch("backendurl", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message: userInput }),
+        });
+
+        // Parse the response from the backend
+        const data = await response.json();
+
+        // Add the bot's response to the messages list
+        const botResponse = { sender: "bot", text: data.response };
         setMessages((prevMessages) => [...prevMessages, botResponse]);
-      }, 1000); // simulate response delay
+      } catch (error) {
+        console.error("Error communicating with the backend:", error);
+        const errorMessage = {
+          sender: "bot",
+          text: "Sorry, I couldn't process your request. Please try again.",
+        };
+        setMessages((prevMessages) => [...prevMessages, errorMessage]);
+      }
     }
-    setUserInput(""); // Clear input after sending
   };
 
   return (
@@ -77,6 +99,7 @@ export default function Chatbot() {
           alignItems: "center",
           justifyContent: "space-between",
           margin: "10px",
+          width: "80vw",
         }}
       >
         <TextField
