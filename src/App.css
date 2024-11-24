@@ -1,6 +1,8 @@
 :root {
-  --textMain: #7E736E;
+  --textMain: #AE9F97;
   --textAccent: #E3DDD6;
+  --bgDark: #7E736E;
+  --bgSecondary: #F5F5F5;
 
   --veryBad: #C8EBEB;
   --veryBadAccent: #3D7D7D;
@@ -14,3 +16,22 @@
   --veryGoodAccent: #8B6C05;
 }
 
+#header {
+  background-color: var(--bgSecondary);
+  width: calc(100% - 32px); 
+  height: 45px;
+  margin: 16px;
+  justify-content: center;
+  border-radius: 5px;
+  box-shadow: none;
+  padding: 10px;
+}
+
+#headerText {
+  font-size: 35px;
+  text-align: center;
+  font-family: sans-serif;
+  letter-spacing: 2;
+  font-weight: 400;
+  color: var(--textMain);
+}
