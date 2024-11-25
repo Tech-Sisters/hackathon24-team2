@@ -6,7 +6,7 @@ import "../App.css"
 
 const theme = createTheme();
 
-export default function Header() {
+export const Header = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
@@ -18,4 +18,5 @@ export default function Header() {
       </AppBar>
     </ThemeProvider>
   );
-}
+} 
+export default Header;

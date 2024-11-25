@@ -1,67 +1,53 @@
-import Grid from "@mui/material/Grid2";
-import {Paper, Typography} from "@mui/material";
+import { format, startOfWeek, addDays } from 'date-fns';
+import "./landing.css"; 
 
-    
-export default function CalendarStrip(tracking) {
-  const generateCalendarDates = () => {
-    const today = new Date(); 
-    const dates = [];
+// eslint-disable-next-line react/prop-types
+export default function CalendarStrip({ trackedData }) {
+    const today = new Date();
 
-    for (let i = 0; i < 7; i++) {
-      const currentDate = new Date(today);
-      currentDate.setDate(today.getDate() - i); 
+    const startOfCurrentWeek = startOfWeek(today, { weekStartsOn: 0 });
+  
+    const weekDays = Array.from({ length: 7 }, (_, i) =>
+      addDays(startOfCurrentWeek, i)
+    );
 
-      const dayOfWeek = currentDate.toLocaleString("en-US", {
-        weekday: "short",
-      }); 
-      const dayOfMonth = currentDate.getDate(); 
-
-      dates.push({ dayOfWeek, dayOfMonth });
-    }
-
-    return dates.reverse();
+  const emotionColors = {
+    veryBad: "var(--veryBad)",
+    bad: "var(--bad)",
+    neutral: "var(--neutral)",
+    good: "var(--good)",
+    veryGood: "var(--veryGood)",
+    white: "#fff"
   };
 
   return (
-    <Grid
-        container
-        spacing={2}
-        sx={{
-          padding: 3,
-          justifyContent: "center",
-          alignItems: "center",
-          textAlign: "center",
-        }}
-      >
-        {generateCalendarDates().map(({ dayOfWeek, dayOfMonth }, index) => (
-          <Grid item xs={4} sm={2} key={index}>
-            <Paper
-              sx={{
-                padding: 2,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: {tracking},
-                height: 30, 
-                width: 30, 
-                textAlign: "center",
-                borderRadius: 2,
-              }}
-            >
-              <Typography
-                variant="body1"
-                sx={{ fontWeight: "bold", fontSize: "0.75rem" }}
-              >
-                {dayOfWeek} 
-              </Typography>
-              <Typography variant="h6" sx={{ fontSize: "0.9rem" }}>
-                {dayOfMonth}
-              </Typography>{" "}
-
-            </Paper>
-          </Grid>
+    <div id="calendarStripContainer">
+      <div id="dayLabels">
+        {weekDays.map((day) => (
+          <div className="dayLabel" key={day}>
+            {format(day, "EEE").toLocaleUpperCase()}
+          </div>
         ))}
-      </Grid>
-  )
+      </div>
+      <div id="dateTiles">
+        {weekDays.map((date) => {
+          const dateString = format(date, "yyyy-MM-dd");
+          const emotion = trackedData[dateString] || "white"; 
+          const tileColor = emotionColors[emotion];
+        //   const isToday = format(date, "yyyy-MM-dd") === format(today, "yyyy-MM-dd"); 
+        const isToday = format(date, "yyyy-MM-dd") === format("2024-11-29", "yyyy-MM-dd"); //dummy code lol
+
+          return (
+            <div
+              className={`dateTile ${isToday ? 'currentDay' : ''}`}
+              key={dateString}
+              style={{ backgroundColor: tileColor }}
+            >
+              {format(date, "d")}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
