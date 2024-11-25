@@ -5,6 +5,7 @@ import HeaderMain from "../components/Landing/headerMain";
 import CalendarStrip from "../components/Landing/calendar";
 import LandingCard from "../components/Landing/card";
 import Footer from "../components/footer";
+import { Carousel } from "../components/Landing/carousel";
 
 
 const Landing = () => {
@@ -26,7 +27,7 @@ const Landing = () => {
         image={bgPurple}
         align="left"
       />
-      
+      <Carousel />
        <LandingCard
         text={`Feeling {} yesterday? \nChat with MAIA now.`}
         image={bgGreen}

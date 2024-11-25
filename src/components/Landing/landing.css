@@ -26,7 +26,7 @@
     font-family: sans-serif;
     letter-spacing: 2;
     font-weight: 400;
-    color: var(--textMain);
+    color: var(--main);
 }
 
 #calendarStripContainer {
@@ -49,7 +49,7 @@
     text-align: center;
     font-size: 0.8rem;
     font-weight: bold;
-    color: var(--textMain);
+    color: var(--main);
   }
   
   #dateTiles {
@@ -72,13 +72,13 @@
   }
   
 .currentDay {
-    border: 2px solid var(--textMain);
+    border: 2px solid var(--main);
   } 
 
 .landingCard {
     position: relative;
     width: calc(100% - 32px);
-    margin: 20px 16px;
+    margin: 8px 16px;
     border-radius: 10px;
     padding: 0px;
 }
@@ -114,4 +114,79 @@
 .cardText.right {
     width: 60%;
     right: 3%;
+}
+
+/* #carouselContainer {
+    position: relative;
+    height: 200px;
+    margin: 8px 16px;
+    border-radius: 10px;
+}
+
+#ayahContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--accent);
+}
+
+.arabicText {
+    font-size: 300px;
+    font-family: 'Times New Roman', Times, serif;
+    color: var(--textBlack);
+    margin-bottom: 10px;
+}
+
+.translationText {
+    white-space: pre-line;
+    font-size: 1.5rem;
+    font-family: Verdana, sans-serif;
+    color: black;
+} */
+
+#carouselContainer {
+    position: relative;
+    height: 200px;
+    margin: 8px 16px;
+    border-radius: 10px;
+}
+
+#ayahContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--accent);
+}
+
+.arabicText {
+    font-size: 3rem; 
+    font-family: 'Amiri', serif; 
+    color: var(--textBlack);
+    margin-bottom: 10px;
+}
+
+.translationText {
+    white-space: pre-line;
+    font-size: 1rem;
+    font-family: Verdana, sans-serif;
+    color: black;
+    text-align: center;
+}
+
+#paginationContainer {
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
