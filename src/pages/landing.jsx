@@ -26,6 +26,7 @@ const Landing = () => {
         image={bgPurple}
         align="left"
       />
+      
        <LandingCard
         text={`Feeling {} yesterday? \nChat with MAIA now.`}
         image={bgGreen}
