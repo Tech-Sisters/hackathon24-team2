@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, Chip } from "@mui/material";
+import { Box, Typography, Chip, Button } from "@mui/material";
 import { css } from "@emotion/react";
 
 const icons = {};
@@ -33,56 +33,56 @@ const ActivitiesPage = () => {
     {
       icon: icons["Family"],
       label: "Family",
-      color: "#C8EBEB",
-      selectedColor: "#3D7D7D",
+      color: "var(--veryGood)",
+      selectedColor: "var(--veryGoodAccent)",
     },
     {
       icon: icons["Work"],
       label: "Work",
-      color: "#C8EBEB",
-      selectedColor: "#3D7D7D",
+      color: "var(--veryGood)",
+      selectedColor: "var(--veryGoodAccent)",
     },
     {
       icon: icons["Partner"],
       label: "Partner",
-      color: "#FFD8CE",
-      selectedColor: "#A15A49",
+      color: "var(--veryBad)",
+      selectedColor: "var(--veryBadAccent)",
     },
     {
       icon: icons["Finances"],
       label: "Finances",
-      color: "#FFD8CE",
-      selectedColor: "#A15A49",
+      color: "var(--veryGood)",
+      selectedColor: "var(--veryGoodAccent)",
     },
     {
       icon: icons["News"],
       label: "News",
-      color: "#C8EBC8",
-      selectedColor: "#497A49",
+      color: "var(--veryGood)",
+      selectedColor: "var(--veryGoodAccent)",
     },
     {
       icon: icons["Hobbies"],
       label: "Hobbies",
-      color: "#FBDFFF",
-      selectedColor: "#915F94",
+      color: "var(--veryGood)",
+      selectedColor: "var(--veryGoodAccent)",
     },
     {
       icon: icons["Weather"],
       label: "Weather",
-      color: "#FBDFFF",
-      selectedColor: "#915F94",
+      color: "var(--veryGood)",
+      selectedColor: "var(--veryGoodAccent)",
     },
     {
       icon: icons["Health"],
       label: "Health",
-      color: "#FFEEB8",
-      selectedColor: "#8B6C05",
+      color: "var(--veryBad)",
+      selectedColor: "var(--veryBadAccent)",
     },
     {
       icon: icons["Travel"],
       label: "Travel",
-      color: "#FFEEB8",
-      selectedColor: "#8B6C05",
+      color: "var(--veryBad)",
+      selectedColor: "var(--veryBadAccent)",
     },
   ];
 
@@ -103,66 +103,79 @@ const ActivitiesPage = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "start",
-        backgroundColor: "#ffffff",
+        backgroundColor: "var(--bgSecondary)",
         height: "100vh",
         width: "100vw",
         padding: "5vw",
       }}
     >
-      <Typography
-        gutterBottom
-        sx={{
-          color: "#7E736E",
-          fontFamily: "Inter, sans-serif",
-          fontSize: { xs: "18px", sm: "24px" },
-          lineHeight: "28px",
-          letterSpacing: "-0.02em",
-          textAlign: "center",
-          margin: "2rem 0",
-          padding: "1rem",
-        }}
-      >
-        Which moments or activities shaped how you feel today?
-      </Typography>
+      <Box sx={{ flex: 1 }}>
+        <Typography
+          gutterBottom
+          sx={{
+            color: "var(--bgDark)",
+            fontFamily: "Inter, sans-serif",
+            fontSize: { xs: "18px", sm: "24px" },
+            lineHeight: "28px",
+            letterSpacing: "-0.02em",
+            textAlign: "center",
+            margin: "2rem 0",
+            padding: "1rem",
+          }}
+        >
+          Which moments or activities shaped how you feel today?
+        </Typography>
 
-      <Box
-        css={activitiesStyles}
-        sx={{
-          width: "80vw",
-          maxWidth: "100vw",
-          margin: "0 auto",
-        }}
-      >
-        {activities.map((activity, index) => (
-          <span key={index} onClick={() => handleFeedbackClick(index)}>
-            <Chip
-              label={activity.label}
-              icon={
-                activity.icon && (
-                  <img
-                    src={activity.icon}
-                    alt={activity.label}
-                    style={{ width: "20px", height: "20px" }}
-                  />
-                )
-              }
-              style={{
-                backgroundColor: selectedFeedback.includes(index)
-                  ? activity.selectedColor
-                  : activity.color,
-                fontWeight: selectedFeedback.includes(index)
-                  ? "bold"
-                  : "normal",
-                fontSize: "14px",
-                lineHeight: "140%",
-                letterSpacing: "0%",
-                color: "#000000",
-                margin: "0.5rem",
-              }}
-            />
-          </span>
-        ))}
+        <Box
+          css={activitiesStyles}
+          sx={{
+            width: "80vw",
+            maxWidth: "100vw",
+            margin: "0 auto",
+          }}
+        >
+          {activities.map((activity, index) => (
+            <span key={index} onClick={() => handleFeedbackClick(index)}>
+              <Chip
+                label={activity.label}
+                icon={
+                  activity.icon && (
+                    <img
+                      src={activity.icon}
+                      alt={activity.label}
+                      style={{ width: "20px", height: "20px" }}
+                    />
+                  )
+                }
+                style={{
+                  backgroundColor: selectedFeedback.includes(index)
+                    ? activity.selectedColor
+                    : activity.color,
+                  fontWeight: selectedFeedback.includes(index)
+                    ? "bold"
+                    : "normal",
+                  fontSize: "14px",
+                  lineHeight: "140%",
+                  letterSpacing: "0%",
+                  color: "#000000",
+                  margin: "0.5rem",
+                }}
+              />
+            </span>
+          ))}
+        </Box>
       </Box>
+      <Button
+        variant="contained"
+        sx={{
+          margin: "3rem 0",
+          backgroundColor: "var(--bgSecondary)",
+          color: "var(--textMain)",
+        }}
+        disabled={selectedFeedback.length === 0}
+      >
+        Next
+      </Button>
     </Box>
   );
 };
