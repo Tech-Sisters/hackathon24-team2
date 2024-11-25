@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from "react"
+import { useNavigate } from "react-router-dom";
 import "./landing.css";
 
 const emotionWords = {
@@ -18,7 +19,8 @@ const emotionColors = {
   veryGood: "var(--veryGoodAccent)",
 };
 
-export default function LandingCard({ image, align, text, date }) {
+export default function LandingCard({ image, align, text, date, link }) {
+  const navigate = useNavigate();
 
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
@@ -28,8 +30,18 @@ export default function LandingCard({ image, align, text, date }) {
   const emotionWord = emotionWords[yesterdayEmotion];
   const formattedText = text && text.includes("{}") ? text.replace("{}", emotionWord) : text;
 
+  const handleCardClick = () => {
+    if (link) {
+      if (link.startsWith("http")) {
+        window.location.href = link;
+      } else {
+        navigate(link);
+      }
+    }
+  };
+
   return (
-    <div className="landingCard">
+    <div className="landingCard" onClick={handleCardClick}>
       <img src={image} alt="Card background" className="cardImage" />
       <div className={`cardText ${align}`}>
         {formattedText.split(emotionWord).map((segment, index) => (
