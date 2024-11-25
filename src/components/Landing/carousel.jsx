@@ -26,7 +26,7 @@ const carouselImages = [ayaImage, feelingTodayImage];
 
 const { useState, useEffect } = React;
 
-export default function Landing() {
+export default function Carousel() {
   const [value, setValue] = React.useState(0);
   const ref = React.useRef(null);
 
