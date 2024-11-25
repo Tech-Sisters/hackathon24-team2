@@ -1,0 +1,42 @@
+#appWrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+  
+#calendarContainer {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    padding: 16px;
+    margin-top: 55px;
+    flex: 1; 
+   overflow-y: auto; 
+   margin-bottom: 60px; 
+   -ms-overflow-style: none;  
+   scrollbar-width: none;
+  }
+  
+  .monthHeader {
+    grid-column: span 7;
+    text-align: left;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 16px;
+  }
+  
+  .dateTile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 4rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: var(--textBlack);
+  }
+  
+  .currentDay {
+    border: 2px solid var(--main);
+  }
+  
