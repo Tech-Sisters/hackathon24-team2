@@ -26,6 +26,7 @@ const Landing = () => {
         text={"How are you feeling today?"}
         image={bgPurple}
         align="left"
+        link="/feeling"
       />
       <Carousel />
        <LandingCard
@@ -33,6 +34,7 @@ const Landing = () => {
         image={bgGreen}
         align="right"
         date={trackedData}
+        link="/maia"
       />
       <Footer />
     </div>

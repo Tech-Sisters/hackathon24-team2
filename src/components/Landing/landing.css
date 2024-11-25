@@ -1,14 +1,4 @@
-/* body {
-     margin: 0; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: stretch; 
-    min-width: 320px; 
-    min-height: 100vh; 
-    width: 100%;
-} */
-
- #headerMain {
+#headerMain {
     background-color: var(--bgSecondary);
     width: calc(100% - 32px); 
     height: 80px;
@@ -43,14 +33,14 @@
     margin-bottom: 8px;
 }
   
-  .dayLabel {
+.dayLabel {
     flex: 1;
     width: 40px;
     text-align: center;
     font-size: 0.8rem;
     font-weight: bold;
     color: var(--main);
-  }
+}
   
   #dateTiles {
     display: flex;
@@ -58,7 +48,7 @@
     width: 100%;
   }
   
-  .dateTile {
+.dateTile {
     width: 4rem;
     height: 4rem;
     margin: 0 4px;
@@ -69,7 +59,7 @@
     font-size: 1rem;
     color: var(--textBlack);
     box-sizing: border-box;
-  }
+}
   
 .currentDay {
     border: 2px solid var(--main);
@@ -81,6 +71,7 @@
     margin: 8px 16px;
     border-radius: 10px;
     padding: 0px;
+    cursor: pointer;
 }
 
 .cardImage {
@@ -116,56 +107,32 @@
     right: 3%;
 }
 
-/* #carouselContainer {
-    position: relative;
-    height: 200px;
-    margin: 8px 16px;
-    border-radius: 10px;
-}
-
-#ayahContainer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--accent);
-}
-
-.arabicText {
-    font-size: 300px;
-    font-family: 'Times New Roman', Times, serif;
-    color: var(--textBlack);
-    margin-bottom: 10px;
-}
-
-.translationText {
-    white-space: pre-line;
-    font-size: 1.5rem;
-    font-family: Verdana, sans-serif;
-    color: black;
-} */
-
 #carouselContainer {
     position: relative;
     height: 200px;
     margin: 8px 16px;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--accent);
 }
 
-#ayahContainer {
-    position: absolute;
+#cardHeader {
+    text-align: left;
+    color: var(--dark);
+    font-family: Roboto, sans-serif;
+    font-weight: 550;
+    font-size: 1.3rem;
+    padding: 8px 16px;
+}
+
+#textContainer {
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--accent);
 }
 
 .arabicText {
@@ -177,15 +144,16 @@
 
 .translationText {
     white-space: pre-line;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-family: Verdana, sans-serif;
     color: black;
     text-align: center;
+    padding: 0 16px;
 }
 
 #paginationContainer {
     position: absolute;
-    bottom: 5px;
+    bottom: 10px;
     width: 100%;
     display: flex;
     justify-content: center;

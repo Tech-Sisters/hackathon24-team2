@@ -1,7 +1,7 @@
 import {
   Box,
   Card,
-  CardHeader,
+  // CardHeader,
   IconButton,
 } from "@mui/material";
 import CircleIcon from "@mui/icons-material/Circle";
@@ -29,8 +29,8 @@ export const Carousel = () => {
 
   return (
     <Card id="carouselContainer">
-      <CardHeader title={slides[activeSlide].title} />
-      <Box id="ayahContainer">
+      <div id="cardHeader" >{slides[activeSlide].title}</div>
+      <Box id="textContainer">
         <div style={{ textAlign: "center" }}>
           <div className="arabicText">
             {slides[activeSlide].arabic}
@@ -45,9 +45,16 @@ export const Carousel = () => {
           <IconButton
             key={index}
             onClick={() => handleSlideChange(index)}
-            color={activeSlide === index ? "rgba(0,0,0, 0.8)" : "rgba(0,0,0, 0.2)"}
+            sx={{
+              padding: 0,
+              margin: "0 5px",
+            }}
           >
-            <CircleIcon />
+            <CircleIcon 
+            sx={{
+                fontSize: "8px",
+                color: activeSlide === index ? "rgba(0, 0, 0, 0.8)" : "rgba(0, 0, 0, 0.2)",
+              }} />
           </IconButton>
         ))}
       </Box>
