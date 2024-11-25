@@ -1,10 +1,21 @@
+#appWrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  
 #calendarContainer {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 8px;
     padding: 16px;
-    margin-top: 60px;
-    overflow: scroll;
+    margin-top: 55px;
+    flex: 1; 
+   overflow-y: auto; 
+   margin-bottom: 60px; 
+   -ms-overflow-style: none;  
+   scrollbar-width: none;
   }
   
   .monthHeader {

@@ -32,10 +32,10 @@ const Tracker = () => {
   };
 
 return (
-    <>
+    <div id="appWrapper">
         <Header />
         <Calendar trackedData={trackedDataCalendar} />
         <Footer />
-    </>
+    </div>
 )}
 export default Tracker;
