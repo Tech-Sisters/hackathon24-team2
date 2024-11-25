@@ -1,10 +1,11 @@
 import { useState } from "react";
-
 import {
   Box,
   Typography,
   TextField,
 } from "@mui/material";
+import HeaderMain from "../components/Landing/headerMain";
+import Footer from "../components/footer";
 
 export default function Chatbot() {
   const [messages, setMessages] = useState([
@@ -102,26 +103,8 @@ export default function Chatbot() {
   };
 
   return (
-    <Box
-      sx={{
-        height: "100vh",
-        width: "100vw",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Typography variant="h1"> MAIA</Typography>
-      </Box>
+    <>
+    <HeaderMain />
       {/* Maia Header */}
       <Box
         sx={{
@@ -202,6 +185,7 @@ export default function Chatbot() {
           Send
         </button>
       </Box>
-    </Box>
+      <Footer />
+    </>
   );
 }
