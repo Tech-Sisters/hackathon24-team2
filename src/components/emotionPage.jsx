@@ -199,7 +199,7 @@ const EmotionPage = () => {
         <Typography
           gutterBottom
           sx={{
-            color: "var(--dark)",
+            color: "var(--bgDark)",
             fontFamily: "Inter, sans-serif",
             fontSize: { xs: "1.5rem", sm: "2rem", md: "2rem" },
             fontWeight: "600",
@@ -259,7 +259,7 @@ const EmotionPage = () => {
         sx={{
           marginTop: "auto",
           backgroundColor: "var(--bgSecondary)",
-          color: "var(--main)",
+          color: "var(--textMain)",
         }}
         disabled={selectedEmotions.length === 0}
       >
