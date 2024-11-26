@@ -137,7 +137,7 @@ const ActivitiesPage = () => {
         <Typography
           gutterBottom
           sx={{
-            color: "var(--bgDark)",
+            color: "var(--dark)",
             fontFamily: "Inter, sans-serif",
             fontSize: { xs: "1rem", sm: "1.25rem", md: "1.25rem" },
             fontWeight: "600",
@@ -204,7 +204,7 @@ const ActivitiesPage = () => {
         sx={{
           margin: "auto",
           backgroundColor: "var(--bgSecondary)",
-          color: "var(--textMain)",
+          color: "var(--main)",
         }}
         disabled={selectedFeedback.length === 0}
       >

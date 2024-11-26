@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from "react";
+import { useState } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import goodImage from "../assets/good.svg";
 import veryGoodImage from "../assets/vgood.svg";
@@ -154,7 +154,7 @@ const FeelingPage = () => {
         sx={{
           marginTop: "auto",
           backgroundColor: "var(--bgSecondary)",
-          color: "var(--textMain)",
+          color: "var(--main)",
         }}
         disabled={selectedFeedback === null}
       >
