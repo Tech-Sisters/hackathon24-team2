@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { Box, Typography, Chip, Button } from "@mui/material";
-import { css } from "@emotion/react";
+import { useState } from "react";
+import { Box, Typography, Chip, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import Header from "../components/header";
+import { ArrowForward, KeyboardArrowLeft } from "@mui/icons-material";
 
 const icons = {};
 const modules = import.meta.glob("../assets/icons/*.svg", { eager: true });
@@ -31,8 +32,8 @@ const ActivitiesPage = () => {
     {
       icon: icons["Partner"],
       label: "Partner",
-      color: "var(--veryBad)",
-      selectedColor: "var(--veryBadAccent)",
+      color: "var(--good)",
+      selectedColor: "var(--goodAccent)",
     },
     {
       icon: icons["Colleagues"],
@@ -43,8 +44,8 @@ const ActivitiesPage = () => {
     {
       icon: icons["Finances"],
       label: "Finances",
-      color: "var(--veryGood)",
-      selectedColor: "var(--veryGoodAccent)",
+      color: "var(--neutral)",
+      selectedColor: "var(--neutralAccent)",
     },
     {
       icon: icons["News"],
@@ -55,8 +56,8 @@ const ActivitiesPage = () => {
     {
       icon: icons["Hobbies"],
       label: "Hobbies",
-      color: "var(--veryGood)",
-      selectedColor: "var(--veryGoodAccent)",
+      color: "var(--good)",
+      selectedColor: "var(--goodAccent)",
     },
     {
       icon: icons["Weather"],
@@ -67,8 +68,8 @@ const ActivitiesPage = () => {
     {
       icon: icons["Health"],
       label: "Health",
-      color: "var(--veryBad)",
-      selectedColor: "var(--veryBadAccent)",
+      color: "var(--neutral)",
+      selectedColor: "var(--neutralAccent)",
     },
     {
       icon: icons["Education"],
@@ -85,8 +86,8 @@ const ActivitiesPage = () => {
     {
       icon: icons["Pets"],
       label: "Pets",
-      color: "var(--veryBad)",
-      selectedColor: "var(--veryBadAccent)",
+      color: "var(--neutral)",
+      selectedColor: "var(--neutralAccent)",
     },
     {
       icon: icons["Travel"],
@@ -97,8 +98,8 @@ const ActivitiesPage = () => {
     {
       icon: icons["Nature"],
       label: "Nature",
-      color: "var(--veryBad)",
-      selectedColor: "var(--veryBadAccent)",
+      color: "var(--neutral)",
+      selectedColor: "var(--neutralAccent)",
     },
     {
       icon: icons["Fitness"],
@@ -117,37 +118,43 @@ const ActivitiesPage = () => {
       }
     });
   };
+
+  const handleBackNavigate = () => {
+    navigate(-1); };
+
   const handleNavigate = () => {
+    //handleSubmit here too
     navigate("/maia");
   };
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "start",
-        backgroundColor: "var(--bgSecondary)",
-        height: "100vh",
-        width: "100vw",
-        padding: "5vw",
-      }}
-    >
+    <>
+      <Header />
+      <IconButton
+        onClick={handleBackNavigate}
+        sx={{
+          marginTop: "80px",
+          color: "var(--main)",
+        }}
+      >
+        <KeyboardArrowLeft sx={{ fontSize: "2rem" }} />
+      </IconButton>
       <Box sx={{ flex: 1 }}>
         <Typography
           gutterBottom
           sx={{
             color: "var(--dark)",
             fontFamily: "Inter, sans-serif",
-            fontSize: { xs: "1rem", sm: "1.25rem", md: "1.25rem" },
+            fontSize: { xs: "1.4rem", sm: "2rem", md: "2rem" },
             fontWeight: "600",
             lineHeight: "28px",
             letterSpacing: "-0.02em",
             textAlign: "center",
             margin: "2rem",
+            paddingTop: "20px",
+            paddingBottom: "50px"
           }}
         >
-          Which moments or activities shaped how you feel today?
+          Which moments or activities shaped your opinions of today?
         </Typography>
 
         <Box
@@ -174,7 +181,7 @@ const ActivitiesPage = () => {
                         width: "20px",
                         height: "20px",
                         filter: selectedFeedback.includes(index)
-                          ? "invert(1) brightness(0) saturate(100%)"
+                          ? "invert(98%) sepia(100%) saturate(0%) hue-rotate(338deg) brightness(104%) contrast(103%)"
                           : "invert(0) brightness(0) saturate(100%)",
                       }}
                     />
@@ -198,19 +205,28 @@ const ActivitiesPage = () => {
           ))}
         </Box>
       </Box>
-      <Button
-        variant="contained"
+         <div
+        style={{
+          display: "flex",
+          justifyContent: "center", 
+          alignItems: "center", 
+          marginTop: "100px",
+        }}
+      >
+      <IconButton
         onClick={handleNavigate}
         sx={{
-          margin: "auto",
-          backgroundColor: "var(--bgSecondary)",
           color: "var(--main)",
+          opacity: selectedFeedback.length === 0 ? 0 : 1, 
+          pointerEvents: selectedFeedback.length === 0 ? "none" : "auto", 
+          transition: "opacity 0.3s ease",
         }}
         disabled={selectedFeedback.length === 0}
       >
-        Next
-      </Button>
-    </Box>
+        <ArrowForward sx={{ fontSize: "2rem",  transform: "scaleX(1.5)" }} />
+      </IconButton>
+      </div>
+    </>
   );
 };
 

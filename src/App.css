@@ -72,4 +72,5 @@
   max-width: 30px;
   max-height: 30px;
   object-fit: contain; 
+  filter: invert(5%) sepia(6%) saturate(4897%) hue-rotate(99deg) brightness(96%) contrast(93%);
 }

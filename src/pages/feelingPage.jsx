@@ -1,13 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { useState } from "react";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, IconButton } from "@mui/material";
 import goodImage from "../assets/good.svg";
 import veryGoodImage from "../assets/vgood.svg";
 import badImage from "../assets/bad.svg";
 import veryBadImage from "../assets/vbad.svg";
 import neutralImage from "../assets/neutral.svg";
 import { useNavigate } from "react-router-dom";
-import Header from "./header";
+import Header from "../components/header";
+import { ArrowForward, KeyboardArrowLeft } from "@mui/icons-material";
 
 const FeelingPage = () => {
   const [selectedFeedback, setSelectedFeedback] = useState(null);
@@ -53,6 +54,10 @@ const FeelingPage = () => {
   const handleFeedbackClick = (index) => {
     setSelectedFeedback(index);
   };
+
+  const handleBackNavigate = () => {
+    navigate(-1); };
+
   const handleNavigate = () => {
     if (selectedFeedback !== null) {
       navigate("/emotion", {
@@ -62,34 +67,30 @@ const FeelingPage = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "space-between",
-        backgroundColor: "var(--bgSecondary)",
-        height: "100vh",
-        width: "100vw",
-        margin: "16px",
-        padding: { xs: "10px", sm: "20px" },
-      }}
-    >
-      <Box>
-        <Header />
-      </Box>
+    <>
+      <Header />
+      <IconButton
+        onClick={handleBackNavigate}
+        sx={{
+          marginTop: "80px",
+          color: "var(--main)",
+        }}
+      >
+        <KeyboardArrowLeft sx={{ fontSize: "2rem" }} />
+      </IconButton>
       <Typography
         gutterBottom
         sx={{
           color: "var(--dark)",
           fontFamily: "Inter, sans-serif",
-          fontSize: { xs: "1.5rem", sm: "2rem", md: "2rem" },
+          fontSize: { xs: "1.4rem", sm: "2rem", md: "2rem" },
           fontWeight: "600",
           lineHeight: "28px",
           letterSpacing: "-0.02em",
           textAlign: "center",
-          padding: "2rem",
           margin: "2rem",
+          paddingTop: "20px",
+          paddingBottom: "100px"
         }}
       >
         How did your day feel today?
@@ -147,20 +148,28 @@ const FeelingPage = () => {
           </Box>
         ))}
       </Box>
-
-      <Button
-        variant="contained"
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center", 
+          alignItems: "center", 
+          marginTop: "220px",
+        }}
+      >
+      <IconButton
         onClick={handleNavigate}
         sx={{
-          marginTop: "auto",
-          backgroundColor: "var(--bgSecondary)",
           color: "var(--main)",
+          opacity: selectedFeedback === null? 0 : 1, 
+          pointerEvents: selectedFeedback === null? "none" : "auto", 
+          transition: "opacity 0.3s ease",
         }}
         disabled={selectedFeedback === null}
       >
-        Next
-      </Button>
-    </Box>
+        <ArrowForward sx={{ fontSize: "2rem",  transform: "scaleX(1.5)" }} />
+      </IconButton>
+      </div>
+    </>
   );
 };
 
