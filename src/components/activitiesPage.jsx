@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box, Typography, Chip, Button } from "@mui/material";
 import { css } from "@emotion/react";
+import { useNavigate } from "react-router-dom";
 
 const icons = {};
 const modules = import.meta.glob("../assets/icons/*.svg", { eager: true });
@@ -9,26 +10,11 @@ for (const path in modules) {
   const iconName = path.split("/").pop().replace(".svg", "");
   icons[iconName] = modules[path].default;
 }
-const activitiesStyles = css`
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 3vw;
-  margin-top: 5vh;
-  font-size: 2rem;
-  cursor: pointer;
-
-  span {
-    transition: transform 0.2s ease-in-out;
-  }
-
-  span:hover {
-    transform: scale(1.2);
-  }
-`;
 
 const ActivitiesPage = () => {
   const [selectedFeedback, setSelectedFeedback] = useState([]);
+  const navigate = useNavigate();
+
   const activities = [
     {
       icon: icons["Family"],
@@ -45,6 +31,12 @@ const ActivitiesPage = () => {
     {
       icon: icons["Partner"],
       label: "Partner",
+      color: "var(--veryBad)",
+      selectedColor: "var(--veryBadAccent)",
+    },
+    {
+      icon: icons["Colleagues"],
+      label: "Colleagues",
       color: "var(--veryBad)",
       selectedColor: "var(--veryBadAccent)",
     },
@@ -79,10 +71,40 @@ const ActivitiesPage = () => {
       selectedColor: "var(--veryBadAccent)",
     },
     {
+      icon: icons["Education"],
+      label: "Education",
+      color: "var(--veryGood)",
+      selectedColor: "var(--veryGoodAccent)",
+    },
+    {
+      icon: icons["Spirituality"],
+      label: "Spirituality",
+      color: "var(--veryBad)",
+      selectedColor: "var(--veryBadAccent)",
+    },
+    {
+      icon: icons["Pets"],
+      label: "Pets",
+      color: "var(--veryBad)",
+      selectedColor: "var(--veryBadAccent)",
+    },
+    {
       icon: icons["Travel"],
       label: "Travel",
       color: "var(--veryBad)",
       selectedColor: "var(--veryBadAccent)",
+    },
+    {
+      icon: icons["Nature"],
+      label: "Nature",
+      color: "var(--veryBad)",
+      selectedColor: "var(--veryBadAccent)",
+    },
+    {
+      icon: icons["Fitness"],
+      label: "Fitness",
+      color: "var(--veryGood)",
+      selectedColor: "var(--veryGoodAccent)",
     },
   ];
 
@@ -95,7 +117,9 @@ const ActivitiesPage = () => {
       }
     });
   };
-
+  const handleNavigate = () => {
+    navigate("/maia");
+  };
   return (
     <Box
       sx={{
@@ -115,23 +139,26 @@ const ActivitiesPage = () => {
           sx={{
             color: "var(--bgDark)",
             fontFamily: "Inter, sans-serif",
-            fontSize: { xs: "18px", sm: "24px" },
+            fontSize: { xs: "1rem", sm: "1.25rem", md: "1.25rem" },
+            fontWeight: "600",
             lineHeight: "28px",
             letterSpacing: "-0.02em",
             textAlign: "center",
-            margin: "2rem 0",
-            padding: "1rem",
+            margin: "2rem",
           }}
         >
           Which moments or activities shaped how you feel today?
         </Typography>
 
         <Box
-          css={activitiesStyles}
           sx={{
             width: "80vw",
             maxWidth: "100vw",
             margin: "0 auto",
+            display: "flex",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            gap: "1vw",
           }}
         >
           {activities.map((activity, index) => (
@@ -143,7 +170,13 @@ const ActivitiesPage = () => {
                     <img
                       src={activity.icon}
                       alt={activity.label}
-                      style={{ width: "20px", height: "20px" }}
+                      style={{
+                        width: "20px",
+                        height: "20px",
+                        filter: selectedFeedback.includes(index)
+                          ? "invert(1) brightness(0) saturate(100%)"
+                          : "invert(0) brightness(0) saturate(100%)",
+                      }}
                     />
                   )
                 }
@@ -154,10 +187,10 @@ const ActivitiesPage = () => {
                   fontWeight: selectedFeedback.includes(index)
                     ? "bold"
                     : "normal",
+                  color: selectedFeedback.includes(index) ? "#FFF" : "#000",
                   fontSize: "14px",
                   lineHeight: "140%",
                   letterSpacing: "0%",
-                  color: "#000000",
                   margin: "0.5rem",
                 }}
               />
@@ -167,8 +200,9 @@ const ActivitiesPage = () => {
       </Box>
       <Button
         variant="contained"
+        onClick={handleNavigate}
         sx={{
-          margin: "3rem 0",
+          margin: "auto",
           backgroundColor: "var(--bgSecondary)",
           color: "var(--textMain)",
         }}
