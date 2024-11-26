@@ -81,7 +81,7 @@ const FeelingPage = () => {
       <Typography
         gutterBottom
         sx={{
-          color: "var(--bgDark)",
+          color: "var(--dark)",
           fontFamily: "Inter, sans-serif",
           fontSize: { xs: "1.5rem", sm: "2rem", md: "2rem" },
           fontWeight: "600",
