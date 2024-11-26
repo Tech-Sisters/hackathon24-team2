@@ -1,43 +1,51 @@
 /** @jsxImportSource @emotion/react */
 import { useState } from "react";
 import { Box, Typography, Button } from "@mui/material";
-import { css } from "@emotion/react";
 import goodImage from "../assets/good.svg";
 import veryGoodImage from "../assets/vgood.svg";
 import badImage from "../assets/bad.svg";
 import veryBadImage from "../assets/vbad.svg";
 import neutralImage from "../assets/neutral.svg";
 import { useNavigate } from "react-router-dom";
-
-const feelingStyles = css`
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-top: 50px;
-  font-size: 2rem;
-  cursor: pointer;
-
-  span {
-    transition: transform 0.2s ease-in-out;
-  }
-
-  span:hover {
-    transform: scale(1.2);
-  }
-`;
+import Header from "./header";
 
 const FeelingPage = () => {
   const [selectedFeedback, setSelectedFeedback] = useState(null);
   const navigate = useNavigate();
   const faces = [
-    { emoji: veryBadImage, label: "Very Bad", color: "var(--veryBadAccent)" },
-    { emoji: badImage, label: "Bad", color: "var(--badAccent)" },
-    { emoji: neutralImage, label: "Neutral", color: "var(--neutralAccent)" },
-    { emoji: goodImage, label: "Good", color: "var(--goodAccent)" },
+    {
+      emoji: veryBadImage,
+      label: "Very Bad",
+      value: "veryBad",
+      severity: 5,
+      color: "var(--veryBadAccent)",
+    },
+    {
+      emoji: badImage,
+      label: "Bad",
+      value: "bad",
+      severity: 5,
+      color: "var(--badAccent)",
+    },
+    {
+      emoji: neutralImage,
+      label: "Neutral",
+      value: "neutral",
+      severity: 3,
+      color: "var(--neutralAccent)",
+    },
+    {
+      emoji: goodImage,
+      label: "Good",
+      value: "good",
+      severity: 3,
+      color: "var(--goodAccent)",
+    },
     {
       emoji: veryGoodImage,
       label: "Very Good",
+      value: "veryGood",
+      severity: 1,
       color: "var(--veryGoodAccent)",
     },
   ];
@@ -46,86 +54,105 @@ const FeelingPage = () => {
     setSelectedFeedback(index);
   };
   const handleNavigate = () => {
-    navigate("/emotion");
+    if (selectedFeedback !== null) {
+      navigate("/emotion", {
+        state: { selectedFeedbackValue: faces[selectedFeedback].value },
+      });
+    }
   };
+
   return (
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "start",
+        justifyContent: "space-between",
         backgroundColor: "var(--bgSecondary)",
         height: "100vh",
         width: "100vw",
+        margin: "16px",
         padding: { xs: "10px", sm: "20px" },
       }}
     >
-      <Box sx={{ flex: 1 }}>
-        <Typography
-          gutterBottom
-          sx={{
-            color: "var(--dark)",
-            fontFamily: "Inter, sans-serif",
-            fontSize: { xs: "18px", sm: "24px" },
-            fontWeight: "600",
-            lineHeight: "28px",
-            letterSpacing: "-0.02em",
-            textAlign: "center",
-            marginTop: "50px",
-          }}
-        >
-          How did your day feel today?
-        </Typography>
+      <Box>
+        <Header />
+      </Box>
+      <Typography
+        gutterBottom
+        sx={{
+          color: "var(--dark)",
+          fontFamily: "Inter, sans-serif",
+          fontSize: { xs: "1.5rem", sm: "2rem", md: "2rem" },
+          fontWeight: "600",
+          lineHeight: "28px",
+          letterSpacing: "-0.02em",
+          textAlign: "center",
+          padding: "2rem",
+          margin: "2rem",
+        }}
+      >
+        How did your day feel today?
+      </Typography>
 
-        <Box css={feelingStyles}>
-          {faces.map((face, index) => (
-            <span
-              key={index}
-              onClick={() => handleFeedbackClick(index)}
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          gap: "10px",
+          flexGrow: 1,
+          marginBottom: "2rem",
+        }}
+      >
+        {faces.map((face, index) => (
+          <Box
+            key={index}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              cursor: "pointer",
+            }}
+            onClick={() => handleFeedbackClick(index)}
+          >
+            <img
+              src={face.emoji}
+              alt={face.label}
               style={{
+                width: "50px",
+                height: "50px",
                 color: face.color,
                 border:
                   selectedFeedback === index
                     ? `2px solid ${face.color}`
                     : "none",
                 borderRadius: "50%",
-                width: "50px",
-                height: "50px",
+                transition: "transform 0.2s ease-in-out",
               }}
-            >
-              <img
-                src={face.emoji}
-                alt={face.label}
-                style={{ width: "50px", height: "50px" }}
-              />
-            </span>
-          ))}
-        </Box>
-        <Box css={feelingStyles}>
-          {faces.map((face, index) => (
+              onMouseEnter={(e) => (e.target.style.transform = "scale(1.2)")}
+              onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
+            />
             <Typography
-              key={index}
               sx={{
-                color: `${face.color}`,
+                color: face.color,
                 fontSize: { xs: "14px", sm: "20px" },
-                lineHeight: "28px",
+                marginTop: "8px",
                 fontWeight: selectedFeedback === index ? "bold" : "normal",
-                letterSpacing: "-0.02em",
                 textAlign: "center",
-                marginTop: "20px",
               }}
             >
               {face.label}
             </Typography>
-          ))}
-        </Box>
+          </Box>
+        ))}
       </Box>
+
       <Button
         variant="contained"
         onClick={handleNavigate}
         sx={{
-          margin: "3rem 0",
+          marginTop: "auto",
           backgroundColor: "var(--bgSecondary)",
           color: "var(--main)",
         }}
