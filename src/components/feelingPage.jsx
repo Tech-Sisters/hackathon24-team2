@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from "react";
+import { useState } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { css } from "@emotion/react";
 import goodImage from "../assets/good.svg";
@@ -65,7 +65,7 @@ const FeelingPage = () => {
         <Typography
           gutterBottom
           sx={{
-            color: "var(--bgDark)",
+            color: "var(--dark)",
             fontFamily: "Inter, sans-serif",
             fontSize: { xs: "18px", sm: "24px" },
             fontWeight: "600",
@@ -121,14 +121,13 @@ const FeelingPage = () => {
           ))}
         </Box>
       </Box>
-      "
       <Button
         variant="contained"
         onClick={handleNavigate}
         sx={{
           margin: "3rem 0",
           backgroundColor: "var(--bgSecondary)",
-          color: "var(--textMain)",
+          color: "var(--main)",
         }}
         disabled={selectedFeedback === null}
       >

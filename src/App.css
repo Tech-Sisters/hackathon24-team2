@@ -1,9 +1,9 @@
 :root {
-  --textMain: #AE9F97;
-  --textAccent: #E3DDD6;
+  --main: #AE9F97;
+  --accent: #E3DDD6;
   --textBlack: #0A1811;
 
-  --bgDark: #7E736E;
+  --dark: #7E736E;
   --bgSecondary: #F5F5F5;
 
   --veryBad: #C8EBEB;
@@ -18,24 +18,40 @@
   --veryGoodAccent: #8B6C05;
 }
 
+
 #header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: center; 
+  z-index: 10; 
+  box-shadow: 0px -2px 10px rgba(0,0,0,0);
+}
+
+#headerBar {
   background-color: var(--bgSecondary);
-  width: calc(100% - 32px); 
-  height: 45px;
-  margin: 16px;
+  width: 88%; 
+  height: 30px;
+  margin: 16px auto;
   justify-content: center;
+  align-items: center;
   border-radius: 5px;
   box-shadow: none;
+  box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
   padding: 10px;
 }
 
 #headerText {
+  line-height: 1;
   font-size: 35px;
   text-align: center;
   font-family: sans-serif;
   letter-spacing: 2;
   font-weight: 400;
-  color: var(--textMain);
+  color: var(--main);
 }
 
 #footer {
@@ -43,13 +59,12 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: var(--textAccent);
+    background-color: var(--accent);
     box-shadow: 0px -2px 10px rgba(0,0,0,0.1);
     display: flex;
     justify-content: space-around; 
     padding: 8px 0; 
 }
-#footer
 
 .footerIcon img {
   width: 5vw; 

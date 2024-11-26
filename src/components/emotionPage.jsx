@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Box, Typography, Chip, Button } from "@mui/material";
 import { css } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
@@ -99,7 +99,7 @@ const EmotionPage = () => {
         <Typography
           gutterBottom
           sx={{
-            color: "var(--bgDark)",
+            color: "var(--dark)",
             fontFamily: "Inter, sans-serif",
             fontSize: { xs: "18px", sm: "24px" },
             lineHeight: "28px",
@@ -148,7 +148,7 @@ const EmotionPage = () => {
         sx={{
           margin: "3rem 0",
           backgroundColor: "var(--bgSecondary)",
-          color: "var(--textMain)",
+          color: "var(--main)",
         }}
         disabled={selectedFeedback.length === 0}
       >
