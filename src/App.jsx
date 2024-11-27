@@ -13,11 +13,13 @@ import mockTrackedData from "./components/mockData"
 function App() {
 
   const trackedData = mockTrackedData;
-  
-  const trackedDataObject =  mockTrackedData.reduce((acc, item) => {
-    acc[item.date] = item.feeling;
-    return acc;
+
+  const trackedDataObject = trackedData.reduce((acc, item) => { 
+    acc[item.date] = item.feeling; 
+    return acc; 
   }, {});
+
+  console.log(trackedData)
   
 
 return (
