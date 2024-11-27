@@ -26,7 +26,7 @@ const Landing = ({trackedData}) => {
         text={`Feeling {} yesterday? \nChat with MAIA now.`}
         image={bgGreen}
         align="right"
-        date={trackedData}
+        data={trackedData}
         link="/maia"
       />
       <Footer />

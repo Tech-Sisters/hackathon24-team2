@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import { 
   format, 
@@ -12,9 +13,17 @@ import {
 } from "date-fns";
 import { useNavigate } from "react-router-dom"; 
 import "./tracker.css";
-import { Link } from "react-router-dom";
 
-// eslint-disable-next-line react/prop-types
+const emotionColors = {
+  veryBad: "var(--veryBad)",
+  bad: "var(--bad)",
+  neutral: "var(--neutral)",
+  good: "var(--good)",
+  veryGood: "var(--veryGood)",
+  white: "#fff",
+  bgSecondary: "var(--bgSecondary)",
+};
+
 const Calendar = ({ trackedData }) => {
   const today = new Date();
   const navigate = useNavigate(); 
@@ -31,16 +40,6 @@ const Calendar = ({ trackedData }) => {
 
   const monthDays = getDaysInMonthGrid(today);
 
-  const emotionColors = {
-    veryBad: "var(--veryBad)",
-    bad: "var(--bad)",
-    neutral: "var(--neutral)",
-    good: "var(--good)",
-    veryGood: "var(--veryGood)",
-    white: "#fff",
-    bgSecondary: "var(--bgSecondary)",
-  };
-
   let currentMonth = "";
 
   return (
@@ -48,7 +47,7 @@ const Calendar = ({ trackedData }) => {
       {monthDays.map((date) => {
         const monthName = format(date, "MMMM");
         const isFirstOfMonth = format(date, "d") === "1";
-        const dateString = format(date, "yyyy-MM-dd");
+        const dateString = format(date, "yyyyMMdd");
         const formattedDateForUrl = format(date, "yyyyMMdd"); 
         const emotion = trackedData[dateString];
         const isToday = isSameDay(date, today);
