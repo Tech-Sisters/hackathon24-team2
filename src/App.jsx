@@ -7,6 +7,8 @@ import ActivitiesPage from "./pages/activitiesPage";
 import Chatbot from "./pages/chatbot";
 import Tracker from "./pages/tracker";
 
+import Details from "./components/trackedData/details";
+
 function App() {
   return (
     <>
@@ -19,6 +21,7 @@ function App() {
             <Route path="/activities" element={<ActivitiesPage />} />
             <Route path="/maia" element={<Chatbot />} />
             <Route path="/tracker" element={<Tracker />} />
+            <Route path="/details/:date" element={<Details />} />
           </Routes>
         </div>
       </Router>
