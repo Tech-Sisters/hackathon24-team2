@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { Home, Chat, Calendar, User } from '../assets/icons.jsx'; 
+import Icon from '../assets/icon.jsx';
 
 const Footer = () => {
   const [value, setValue] = useState(0);
@@ -21,24 +21,24 @@ const Footer = () => {
       value={value}
       onChange={handleChange}
     >
-      <BottomNavigationAction
+       <BottomNavigationAction
         className='footerIcon'
-        icon={<img src={Home} alt="Home"/>}
+        icon={<Icon alt="Home Icon" icon="home" />} 
         onClick={() => handleNavigation('/')} 
       />
       <BottomNavigationAction
-      className='footerIcon'
-        icon={<img src={Chat} alt="Chat"  />}
+        className='footerIcon'
+        icon={<Icon alt="Chat Icon" icon="chat" />} 
         onClick={() => handleNavigation('/maia')} 
       />
       <BottomNavigationAction
-      className='footerIcon'
-        icon={<img src={Calendar} alt="Calendar"  />}
+        className='footerIcon'
+        icon={<Icon alt="Calendar Icon" icon="calendar" />} 
         onClick={() => handleNavigation('/tracker')} 
       />
       <BottomNavigationAction
-      className='footerIcon'
-        icon={<img src={User} alt="User" />}
+        className='footerIcon'
+        icon={<Icon alt="User Icon" icon="user" />} 
         onClick={() => handleNavigation('/settings')} 
       />
     </BottomNavigation>

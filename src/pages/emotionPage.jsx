@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Box, Typography, Chip, Button } from "@mui/material";
+import { useState, useEffect } from "react";
+import { Box, Typography, Chip, IconButton } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
-import Header from "./header";
+import Header from "../components/header";
+import { ArrowForward, KeyboardArrowLeft } from "@mui/icons-material";
 
 const EmotionPage = () => {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ const EmotionPage = () => {
       label: "Guilty",
       color: "var(--bad)",
       selectedColor: "var(--badAccent)",
-      value: "bad",
+      value: "veryBad",
     },
     {
       label: "Sad",
@@ -95,25 +96,19 @@ const EmotionPage = () => {
       value: "neutral",
     },
     {
-      label: "Proud",
+      label: "Content",
       color: "var(--good)",
       selectedColor: "var(--goodAccent)",
       value: "good",
     },
     {
-      label: "Energized",
+      label: "Energised",
       color: "var(--good)",
       selectedColor: "var(--goodAccent)",
       value: "good",
     },
     {
       label: "Relaxed",
-      color: "var(--good)",
-      selectedColor: "var(--goodAccent)",
-      value: "good",
-    },
-    {
-      label: "Content",
       color: "var(--good)",
       selectedColor: "var(--goodAccent)",
       value: "good",
@@ -128,6 +123,12 @@ const EmotionPage = () => {
       label: "Optimistic",
       color: "var(--veryGood)",
       selectedColor: "var(--veryGoodAccent)",
+      value: "veryGood",
+    },
+    {
+      label: "Proud",
+      color: "var(--good)",
+      selectedColor: "var(--goodAccent)",
       value: "veryGood",
     },
     {
@@ -154,13 +155,23 @@ const EmotionPage = () => {
 
   useEffect(() => {
     if (selectedFeedbackValue) {
-      const prioritized = emotions.filter(
-        (emotion) => emotion.value === selectedFeedbackValue
-      );
-      const others = emotions.filter(
-        (emotion) => emotion.value !== selectedFeedbackValue
-      );
-      setReorderedEmotions([...prioritized, ...others]);
+      const priorityMap = {
+        good: ["good", "veryGood", "neutral", "bad", "veryBad"],
+        veryGood: ["veryGood", "good", "neutral", "bad", "veryBad"],
+        neutral: ["neutral", "bad", "good", "veryGood", "veryBad"],
+        bad: ["bad", "veryBad", "neutral", "good", "veryGood"],
+        veryBad: ["veryBad", "bad", "neutral", "good", "veryGood"],
+      };
+  
+      const priorityOrder = priorityMap[selectedFeedbackValue];
+  
+      const reordered = emotions.sort((a, b) => {
+        return (
+          priorityOrder.indexOf(a.value) - priorityOrder.indexOf(b.value)
+        );
+      });
+  
+      setReorderedEmotions(reordered);
     } else {
       setReorderedEmotions(emotions);
     }
@@ -175,39 +186,39 @@ const EmotionPage = () => {
       }
     });
   };
+
+  const handleBackNavigate = () => {
+    navigate(-1); };
+
   const handleNavigate = () => {
     navigate("/activities");
   };
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "start",
-        backgroundColor: "var(--bgSecondary)",
-        height: "100vh",
-        width: "100vw",
-        margin: "16px",
-        padding: { xs: "10px", sm: "20px" },
-      }}
-    >
-      <Box>
-        <Header />
-      </Box>
+    <>
+      <Header />
+      <IconButton
+        onClick={handleBackNavigate}
+        sx={{
+          marginTop: "80px",
+          color: "var(--main)",
+        }}
+      >
+        <KeyboardArrowLeft sx={{ fontSize: "2rem" }} />
+      </IconButton>
       <Box sx={{ flex: 1 }}>
         <Typography
           gutterBottom
           sx={{
             color: "var(--dark)",
             fontFamily: "Inter, sans-serif",
-            fontSize: { xs: "1.5rem", sm: "2rem", md: "2rem" },
+            fontSize: { xs: "1.4rem", sm: "2rem", md: "2rem" },
             fontWeight: "600",
             lineHeight: "28px",
             letterSpacing: "-0.02em",
             textAlign: "center",
-            padding: "2rem",
             margin: "2rem",
+            paddingTop: "20px",
+            paddingBottom: "50px"
           }}
         >
           What emotions are sitting with you right now?
@@ -247,25 +258,37 @@ const EmotionPage = () => {
                       ? emotion.selectedColor
                       : emotion.color,
                   },
+                  fontSize: "14px",
+                  lineHeight: "140%",
+                  letterSpacing: "0%",
                 }}
               />
             );
           })}
         </Box>
       </Box>
-      <Button
-        variant="contained"
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center", 
+          alignItems: "center", 
+          marginTop: "100px",
+        }}
+      >
+      <IconButton
         onClick={handleNavigate}
         sx={{
-          marginTop: "auto",
-          backgroundColor: "var(--bgSecondary)",
-          color: "var(--textMain)",
+          color: "var(--main)",
+          opacity: selectedEmotions.length === 0 ? 0 : 1, 
+          pointerEvents: selectedEmotions.length === 0 ? "none" : "auto", 
+          transition: "opacity 0.3s ease",
         }}
         disabled={selectedEmotions.length === 0}
       >
-        Next
-      </Button>
-    </Box>
+        <ArrowForward sx={{ fontSize: "2rem",  transform: "scaleX(1.5)" }} />
+      </IconButton>
+      </div>
+    </>
   );
 };
 
