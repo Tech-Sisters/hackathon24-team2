@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-import Emotion from "../models/emotions";
+import Emotions from "../models/emotion.js";
 
 router.post("/send-emotion", async (req, res) => {
   const { emotion_type, emoji, severity } = req.body;
