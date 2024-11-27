@@ -7,10 +7,10 @@ const Tracker = ({ trackedData}) => {
 
 
 return (
-    <div id="appWrapper">
+    <>
         <Header />
         <Calendar trackedData={trackedData} />
         <Footer />
-    </div>
+    </>
 )}
 export default Tracker;

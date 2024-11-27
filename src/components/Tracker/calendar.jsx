@@ -81,7 +81,7 @@ const Calendar = ({ trackedData }) => {
               }}
               onClick={() => {
                 if (!isFutureDate) {
-                  navigate(`/trackedData/${formattedDateForUrl}`); 
+                  navigate(`/tracker/${formattedDateForUrl}`); 
                 }
               }}
             >

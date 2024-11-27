@@ -6,7 +6,7 @@ import EmotionPage from "./pages/emotionPage";
 import ActivitiesPage from "./pages/activitiesPage";
 import Chatbot from "./pages/chatbot";
 import Tracker from "./pages/tracker";
-import TrackedData from "./pages/trackedData";
+import TrackedDay from "./pages/trackedDay";
 import data from "./components/data"
 
 function App() {
@@ -24,7 +24,8 @@ return (
             <Route path="/activities" element={<ActivitiesPage />} />
             <Route path="/maia" element={<Chatbot />} />
             <Route path="/tracker" element={<Tracker trackedData={trackedData} />} />
-            <Route path="/trackedData/:date"  element={<TrackedData trackedData={trackedData} />} />
+            {/* <Route path="/trackedDay"  element={<TrackedDay trackedData={trackedData} />} />  */}
+            <Route path="/tracker/:date"  element={<TrackedDay trackedData={trackedData} />} />
           </Routes>
         </div>
       </Router>
