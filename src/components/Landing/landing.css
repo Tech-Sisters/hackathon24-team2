@@ -1,27 +1,37 @@
 #headerMain {
+    padding: 0;
+    margin: 0;
+    background-color: white;
+    box-shadow: 0px -2px 10px rgba(0,0,0,0);
+}
+
+#headerBox {
     background-color: var(--bgSecondary);
-    width: calc(100% - 32px); 
-    height: 80px;
+    height: 50px;
     margin: 16px;
+    margin-bottom: 0;
     display: flex;
     justify-content: center;
     border-radius: 5px;
     box-shadow: none;
-    padding: 30px;
+    padding: 20px;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
 }
 
-#headerLogo {
-    text-align: center;
-    font-size: 55px;
-    font-family: sans-serif;
-    letter-spacing: 2;
-    font-weight: 400;
-    color: var(--main);
-}
+.icon {
+    display: flex;
+    align-items: center;
+  }
+
+  #iconLarge {
+    height: 55px; 
+    width: auto;
+    filter: invert(77%) sepia(29%) saturate(105%) hue-rotate(337deg) brightness(90%) contrast(85%);
+  }
 
 #calendarStripContainer {
     padding: 0 16px;
-    margin-top: 116px;
+    margin-top: 120px;
     width: 100%;
     box-sizing: border-box;
 }
