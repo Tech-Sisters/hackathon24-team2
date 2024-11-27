@@ -6,22 +6,26 @@ import EmotionPage from "./pages/emotionPage";
 import ActivitiesPage from "./pages/activitiesPage";
 import Chatbot from "./pages/chatbot";
 import Tracker from "./pages/tracker";
-
-import Details from "./components/trackedData/details";
+import TrackedDay from "./pages/trackedDay";
+import data from "./components/data"
 
 function App() {
-  return (
+
+  const trackedData = data;
+
+return (
     <>
       <Router>
         <div>
           <Routes>
-            <Route path="/" element={<Landing />} />
+            <Route path="/" element={<Landing trackedData={trackedData} />} />
             <Route path="/feeling" element={<FeelingPage />} />
             <Route path="/emotion" element={<EmotionPage />} />
             <Route path="/activities" element={<ActivitiesPage />} />
             <Route path="/maia" element={<Chatbot />} />
-            <Route path="/tracker" element={<Tracker />} />
-            <Route path="/details/:date" element={<Details />} />
+            <Route path="/tracker" element={<Tracker trackedData={trackedData} />} />
+            {/* <Route path="/trackedDay"  element={<TrackedDay trackedData={trackedData} />} />  */}
+            <Route path="/tracker/:date"  element={<TrackedDay trackedData={trackedData} />} />
           </Routes>
         </div>
       </Router>
