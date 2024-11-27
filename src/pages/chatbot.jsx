@@ -16,32 +16,32 @@ export default function Chatbot() {
   {
     /* Check chatbot with mock data*/
   }
-  // Mock data for bot responses
-  const mockResponses = [
-    { trigger: "hello", response: "Hi there! How can I help you today?" },
-    {
-      trigger: "sad",
-      response:
-        "I am sorry to hear that. Here is a comforting verse from the Quran: 'Indeed, with hardship comes ease.' (94:6)",
-    },
-    {
-      trigger: "happy",
-      response: "That's wonderful! Always remember to be grateful.",
-    },
-    {
-      trigger: "thank you",
-      response: "You're welcome! Let me know if I can assist further.",
-    },
-  ];
-  // Simulate bot response using mock data
-  const getMockResponse = (input) => {
-    const found = mockResponses.find((item) =>
-      input.toLowerCase().includes(item.trigger)
-    );
-    return found
-      ? found.response
-      : "I'm here to assist with any emotions or questions you have!";
-  };
+  // // Mock data for bot responses
+  // const mockResponses = [
+  //   { trigger: "hello", response: "Hi there! How can I help you today?" },
+  //   {
+  //     trigger: "sad",
+  //     response:
+  //       "I am sorry to hear that. Here is a comforting verse from the Quran: 'Indeed, with hardship comes ease.' (94:6)",
+  //   },
+  //   {
+  //     trigger: "happy",
+  //     response: "That's wonderful! Always remember to be grateful.",
+  //   },
+  //   {
+  //     trigger: "thank you",
+  //     response: "You're welcome! Let me know if I can assist further.",
+  //   },
+  // ];
+  // // Simulate bot response using mock data
+  // const getMockResponse = (input) => {
+  //   const found = mockResponses.find((item) =>
+  //     input.toLowerCase().includes(item.trigger)
+  //   );
+  //   return found
+  //     ? found.response
+  //     : "I'm here to assist with any emotions or questions you have!";
+  // };
 
   {
     /*code for back end chat connectivity
@@ -84,27 +84,61 @@ export default function Chatbot() {
   */
   }
 
-  // Handle sending a message
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (userInput.trim()) {
       const newMessage = { sender: "user", text: userInput };
       setMessages((prevMessages) => [...prevMessages, newMessage]);
 
-      // Simulate a bot response after the user sends a message
-      setTimeout(() => {
-        const botResponse = getMockResponse(userInput);
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { sender: "bot", text: botResponse },
-        ]);
-      }, 1000); // Simulate delay
+      try {
+        // Make API call to the Flask backend
+        const response = await fetch(`http://127.0.0.1:5000/api/chat?msg=${encodeURIComponent(userInput)}`, {
+          method: "GET",
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch response from the backend");
+        }
+
+        const data = await response.json();
+
+        // Add bot's response to the chat
+        const botResponse = { sender: "bot", text: data.bot_response };
+        setMessages((prevMessages) => [...prevMessages, botResponse]);
+      } catch (error) {
+        console.error("Error communicating with the backend:", error);
+        const errorMessage = {
+          sender: "bot",
+          text: "Sorry, I couldn't process your request. Please try again.",
+        };
+        setMessages((prevMessages) => [...prevMessages, errorMessage]);
+      }
     }
+
     setUserInput(""); // Clear input field
   };
 
+
+  // // Handle sending a message
+  // const sendMessage = () => {
+  //   if (userInput.trim()) {
+  //     const newMessage = { sender: "user", text: userInput };
+  //     setMessages((prevMessages) => [...prevMessages, newMessage]);
+
+  //     // Simulate a bot response after the user sends a message
+  //     setTimeout(() => {
+  //       const botResponse = getMockResponse(userInput);
+  //       setMessages((prevMessages) => [
+  //         ...prevMessages,
+  //         { sender: "bot", text: botResponse },
+  //       ]);
+  //     }, 1000); // Simulate delay
+  //   }
+  //   setUserInput(""); // Clear input field
+  // };
+
   return (
     <>
-    <HeaderMain />
+      <HeaderMain />
       {/* Maia Header */}
       <Box
         sx={{
