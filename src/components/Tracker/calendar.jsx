@@ -1,24 +1,25 @@
-import React from "react"
-import { 
-  format, 
-  startOfMonth, 
-  endOfMonth, 
-  addDays, 
-  startOfWeek, 
-  endOfWeek, 
-  isFuture, 
-  isSameDay, 
-  isBefore 
+import React from "react";
+import {
+  format,
+  startOfMonth,
+  endOfMonth,
+  addDays,
+  startOfWeek,
+  endOfWeek,
+  isFuture,
+  isSameDay,
+  isBefore,
 } from "date-fns";
 import "./tracker.css";
+import { Link } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 const Calendar = ({ trackedData }) => {
   const today = new Date();
 
   const getDaysInMonthGrid = (month) => {
-    const start = startOfWeek(startOfMonth(month), { weekStartsOn: 0 }); 
-    const end = addDays(endOfWeek(endOfMonth(month), { weekStartsOn: 0 }), 30); 
+    const start = startOfWeek(startOfMonth(month), { weekStartsOn: 0 });
+    const end = addDays(endOfWeek(endOfMonth(month), { weekStartsOn: 0 }), 30);
     const days = [];
     for (let date = start; date <= end; date = addDays(date, 1)) {
       days.push(date);
@@ -69,12 +70,8 @@ const Calendar = ({ trackedData }) => {
         }
 
         return (
-          <React.Fragment key={dateString}>
-            {showMonthName && (
-              <div className="monthHeader">
-                {monthName}
-              </div>
-            )}
+          /*<React.Fragment key={dateString}>
+            {showMonthName && <div className="monthHeader">{monthName}</div>}
             <div
               className={`dateTile ${isToday ? "currentDay" : ""}`}
               style={{
@@ -83,6 +80,26 @@ const Calendar = ({ trackedData }) => {
             >
               {format(date, "d")}
             </div>
+          </React.Fragment>
+        );
+      })}
+    </div>*/
+          <React.Fragment key={dateString}>
+            {showMonthName && <div className="monthHeader">{monthName}</div>}
+            {/* Use Link to navigate to the details page with the selected date */}
+            <Link
+              to={`/details/${dateString}`}
+              style={{ textDecoration: "none" }}
+            >
+              <div
+                className={`dateTile ${isToday ? "currentDay" : ""}`}
+                style={{
+                  backgroundColor: tileColor,
+                }}
+              >
+                {format(date, "d")}
+              </div>
+            </Link>
           </React.Fragment>
         );
       })}
