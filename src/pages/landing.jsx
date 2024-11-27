@@ -8,16 +8,9 @@ import Footer from "../components/footer";
 import { Carousel } from "../components/Landing/carousel";
 
 
-const Landing = () => {
+// eslint-disable-next-line react/prop-types
+const Landing = ({trackedData}) => {
   
-  const trackedData = {
-    "2024-11-24": "bad",
-    "2024-11-25": "veryGood",
-    "2024-11-26": "good",
-    "2024-11-27": "veryBad",
-    "2024-11-28": "bad",
-  };
-
   return (
     <div>
        <HeaderMain />

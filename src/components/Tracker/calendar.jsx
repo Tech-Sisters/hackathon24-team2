@@ -1,21 +1,23 @@
 import React from "react";
-import {
-  format,
-  startOfMonth,
-  endOfMonth,
-  addDays,
-  startOfWeek,
-  endOfWeek,
-  isFuture,
-  isSameDay,
-  isBefore,
+import { 
+  format, 
+  startOfMonth, 
+  endOfMonth, 
+  addDays, 
+  startOfWeek, 
+  endOfWeek, 
+  isFuture, 
+  isSameDay, 
+  isBefore 
 } from "date-fns";
+import { useNavigate } from "react-router-dom"; 
 import "./tracker.css";
 import { Link } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 const Calendar = ({ trackedData }) => {
   const today = new Date();
+  const navigate = useNavigate(); 
 
   const getDaysInMonthGrid = (month) => {
     const start = startOfWeek(startOfMonth(month), { weekStartsOn: 0 });
@@ -47,12 +49,12 @@ const Calendar = ({ trackedData }) => {
         const monthName = format(date, "MMMM");
         const isFirstOfMonth = format(date, "d") === "1";
         const dateString = format(date, "yyyy-MM-dd");
+        const formattedDateForUrl = format(date, "yyyyMMdd"); 
         const emotion = trackedData[dateString];
         const isToday = isSameDay(date, today);
         const isFutureDate = isFuture(date);
         const isPastDate = isBefore(date, today);
 
-        // Determine tile background color
         let tileColor;
         if (isFutureDate) {
           tileColor = emotionColors.white;
@@ -62,7 +64,6 @@ const Calendar = ({ trackedData }) => {
           tileColor = emotionColors.bgSecondary;
         }
 
-        // Display month name only for the first day or when month changes
         let showMonthName = false;
         if (isFirstOfMonth || monthName !== currentMonth) {
           currentMonth = monthName;
@@ -70,36 +71,22 @@ const Calendar = ({ trackedData }) => {
         }
 
         return (
-          /*<React.Fragment key={dateString}>
+          <React.Fragment key={dateString}>
             {showMonthName && <div className="monthHeader">{monthName}</div>}
             <div
               className={`dateTile ${isToday ? "currentDay" : ""}`}
               style={{
                 backgroundColor: tileColor,
+                cursor: isFutureDate ? "not-allowed" : "pointer", 
+              }}
+              onClick={() => {
+                if (!isFutureDate) {
+                  navigate(`/trackedData/${formattedDateForUrl}`); 
+                }
               }}
             >
               {format(date, "d")}
             </div>
-          </React.Fragment>
-        );
-      })}
-    </div>*/
-          <React.Fragment key={dateString}>
-            {showMonthName && <div className="monthHeader">{monthName}</div>}
-            {/* Use Link to navigate to the details page with the selected date */}
-            <Link
-              to={`/details/${dateString}`}
-              style={{ textDecoration: "none" }}
-            >
-              <div
-                className={`dateTile ${isToday ? "currentDay" : ""}`}
-                style={{
-                  backgroundColor: tileColor,
-                }}
-              >
-                {format(date, "d")}
-              </div>
-            </Link>
           </React.Fragment>
         );
       })}

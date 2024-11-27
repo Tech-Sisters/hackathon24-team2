@@ -1,14 +1,15 @@
 import Header from "../components/header";
 import Footer from "../components/footer";
-import Details from "../components/trackedData/details";
+import Calendar from "../components/Tracker/calendar";
 
-const TrackedData = () => {
-  return (
+// eslint-disable-next-line react/prop-types
+const TrackedData = ({ trackedData }) => {
+
+return (
     <div id="appWrapper">
-      <Header />
-      <Details />
-      <Footer />
+        <Header />
+        <Calendar trackedData={trackedData} />
+        <Footer />
     </div>
-  );
-};
+)}
 export default TrackedData;
