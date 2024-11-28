@@ -310,18 +310,6 @@ const EmotionPage = () => {
         >
           <ArrowForward sx={{ fontSize: "2rem", transform: "scaleX(1.5)" }} />
         </IconButton>
-        <IconButton
-          onClick={handleNavigate}
-          sx={{
-            color: "var(--main)",
-            opacity: selectedEmotions.length === 0 ? 0 : 1,
-            pointerEvents: selectedEmotions.length === 0 ? "none" : "auto",
-            transition: "opacity 0.3s ease",
-          }}
-          disabled={selectedEmotions.length === 0}
-        >
-          <ArrowForward sx={{ fontSize: "2rem", transform: "scaleX(1.5)" }} />
-        </IconButton>
       </div>
     </>
   );

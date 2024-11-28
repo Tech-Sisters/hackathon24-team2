@@ -3,7 +3,6 @@ import { Box, Typography, Chip, IconButton } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 import Header from "../components/header";
 import { ArrowForward, KeyboardArrowLeft } from "@mui/icons-material";
-import { useLocation } from "react-router-dom";
 import axios from "axios";
 
 const icons = {};
@@ -21,13 +20,17 @@ const ActivitiesPage = () => {
   const navigate = useNavigate();
 
   const location = useLocation();
+  const { feeling, emotion } = location.state || {
+    feeling: null,
+    emotion: null,
+  };
 
   // Log location.state to debug
   console.log("Location State:", location.state)
 
   const { selectedFeedbackValue, selectedEmotions } = location.state?.dataForActivities || {
-    selectedFeedbackValue: "", // Default to empty string if no feedback value
-    selectedEmotions: [], // Default to an empty array if no emotions selected
+    selectedFeedbackValue: "",
+    selectedEmotions: [],
   };
 
   // Log the values to verify
@@ -153,9 +156,9 @@ const ActivitiesPage = () => {
       reason: selectedActivitiesLabels,
     };
     const dataForMaia = {
-      selectedFeedbackValue: selectedFeedbackValue, // Feeling
+      selectedFeedbackValue: selectedFeedbackValue,
       selectedEmotions: selectedEmotions, // Selected emotions
-      selectedActivityLabels: selectedActivityLabels, // Selected activities
+      selectedActivityLabels: selectedActivitiesLabels, // Selected activities
     };
     try {
       console.log("here", postData);
