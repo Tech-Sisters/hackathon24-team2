@@ -10,7 +10,6 @@ const EmotionPage = () => {
   const { selectedFeedbackValue } = location.state || {
     selectedFeedbackValue: null,
   };
-  console.log(selectedFeedbackValue)
   const emotions = [
     {
       label: "Anxious",
@@ -164,14 +163,11 @@ const EmotionPage = () => {
         veryBad: ["veryBad", "bad", "neutral", "good", "veryGood"],
       };
 
-
       const priorityOrder = priorityMap[selectedFeedbackValue];
-
 
       const reordered = emotions.sort((a, b) => {
         return priorityOrder.indexOf(a.value) - priorityOrder.indexOf(b.value);
       });
-
 
       setReorderedEmotions(reordered);
     } else {
@@ -193,7 +189,6 @@ const EmotionPage = () => {
     navigate(-1);
   };
 
-
   const handleNavigate = () => {
     const selectedEmotionObjects = reorderedEmotions.filter((_, index) =>
       selectedEmotions.includes(index)
@@ -208,7 +203,12 @@ const EmotionPage = () => {
         selectedEmotions: selectedEmotionLabels,
       };
 
-      navigate("/activities", { state: { dataForActivities } });
+      navigate("/activities", {
+        state: {
+          feeling: dataForActivities.selectedFeedbackValue,
+          emotion: dataForActivities.selectedEmotions,
+        },
+      });
     } else {
       console.error("Error: Missing data (Feeling or Emotions)");
     }
