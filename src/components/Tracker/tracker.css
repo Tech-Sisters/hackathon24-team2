@@ -42,6 +42,9 @@
     border: 1px solid var(--accent);
     border-radius: 4px;
     white-space: pre-line;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
   }
   
   #dataTitle {
@@ -72,3 +75,14 @@
     margin-top: 5px;
   }
   
+  .saveButton {
+    color: var(--dark);
+    border: 1px solid var(--accent);
+  }
+
+  .saveButton:hover {
+    border-color: transparent;
+    background-color: var(--main);
+    color: white;
+
+  }

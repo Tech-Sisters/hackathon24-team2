@@ -28,9 +28,10 @@ const TrackedDay = () => {
             },
           }
         );
-        const mostRecentEntry = response.data.data.sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-        )[0];
+        const mostRecentEntry =
+          response.data.data.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          )[0] || [];
         const formattedObj = {
           [date]: {
             feeling: mostRecentEntry.feeling,
