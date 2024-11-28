@@ -1,23 +1,8 @@
 /* eslint-disable react/prop-types */
-import React from "react"
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import { emotionAccentColors, emotionWords } from "../../utils/constants";
 import "./landing.css";
-
-const emotionWords = {
-  veryBad: "TERRIBLE",
-  bad: "UNPLEASANT",
-  neutral: "NONCHALANT",
-  good: "GREAT",
-  veryGood: "ECSTATIC",
-};
-
-const emotionColors = {
-  veryBad: "var(--veryBadAccent)",
-  bad: "var(--badAccent)",
-  neutral: "var(--neutralAccent)",
-  good: "var(--goodAccent)",
-  veryGood: "var(--veryGoodAccent)",
-};
 
 export default function LandingCard({ image, align, text, data, link }) {
   const navigate = useNavigate();
@@ -25,10 +10,12 @@ export default function LandingCard({ image, align, text, data, link }) {
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
   const yesterdayString = yesterday.toISOString().split("T")[0];
-  const yesterdayEmotion = data && data[yesterdayString] ? data[yesterdayString] : "neutral"
+  const yesterdayEmotion =
+    data && data[yesterdayString] ? data[yesterdayString] : "neutral";
 
   const emotionWord = emotionWords[yesterdayEmotion];
-  const formattedText = text && text.includes("{}") ? text.replace("{}", emotionWord) : text;
+  const formattedText =
+    text && text.includes("{}") ? text.replace("{}", emotionWord) : text;
 
   const handleCardClick = () => {
     if (link) {
@@ -48,7 +35,7 @@ export default function LandingCard({ image, align, text, data, link }) {
           <React.Fragment key={index}>
             {segment}
             {index < formattedText.split(emotionWord).length - 1 && (
-              <span style={{ color: emotionColors[yesterdayEmotion] }}>
+              <span style={{ color: emotionAccentColors[yesterdayEmotion] }}>
                 {emotionWord}
               </span>
             )}
