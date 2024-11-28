@@ -9,7 +9,6 @@ import ActivitiesPage from "./pages/activitiesPage";
 import Chatbot from "./pages/chatbot";
 import Tracker from "./pages/tracker";
 import TrackedDay from "./pages/trackedDay";
-// import fetchTrackedData from "./components/data";
 // import mockTrackedData from "./components/mockData";
 
 const formatDate = (isoDateString) => {
@@ -25,14 +24,6 @@ function App() {
   const [trackedData, setTrackedData] = useState(null);
   const [trackedDataObject, setTrackedDataObject] = useState(null);
   const [loading, setLoading] = useState(true);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const data = await fetchTrackedData();
-  //     setTrackedData(data); // Store the fetched data in state
-  //   };
-
-  //   fetchData();
-  // }, [trackedData]);
 
   useEffect(() => {
     const fetchTrackedData = async () => {
@@ -74,15 +65,7 @@ function App() {
   if (!trackedData || !trackedDataObject) {
     return <div>No data available</div>;
   }
-  // const data = {
-  //   "2024-11-23": "veryBad",
-  //   "2024-11-24": "bad",
-  //   "2024-11-25": "veryGood",
-  //   "2024-11-26": "good",
-  //   "2024-11-27": "veryBad",
-  //   "2024-11-28": "bad",
-  // };
-  //const trackedDataObject = data;
+
   return (
     <>
       <Router>
@@ -100,7 +83,6 @@ function App() {
               path="/tracker"
               element={<Tracker trackedData={trackedDataObject} />}
             />
-            {/* <Route path="/trackedDay"  element={<TrackedDay trackedData={trackedData} />} />  */}
             <Route
               path="/tracker/:date"
               element={<TrackedDay trackedData={trackedData} />}
