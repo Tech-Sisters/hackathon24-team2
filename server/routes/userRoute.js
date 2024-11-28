@@ -10,7 +10,7 @@ router.post("/", async (req, res) => {
       feeling,
       emotion,
       reason,
-      extraNotes
+      extraNotes,
     });
     await newUserFeeling.save();
     res.status(201).json({
@@ -28,6 +28,7 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const users = await User.find();
+    console.log(users);
     res
       .status(200)
       .json({ message: "Users fetched successfully", data: users });

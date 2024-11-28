@@ -23,7 +23,8 @@ const formatDate = (isoDateString) => {
 
 function App() {
   const [trackedData, setTrackedData] = useState(null);
-
+  const [trackedDataObject, setTrackedDataObject] = useState(null);
+  const [loading, setLoading] = useState(true);
   // useEffect(() => {
   //   const fetchData = async () => {
   //     const data = await fetchTrackedData();
@@ -35,45 +36,53 @@ function App() {
 
   useEffect(() => {
     const fetchTrackedData = async () => {
+      let object = null;
+
       try {
         const response = await axios.get(
           "http://localhost:3001/api/user-feelings/"
         );
-        console.log(response);
-        if (response.data && Array.isArray(response.data.data)) {
-          const sortedData = response.data.data.sort(
-            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-          );
-
-          // Get the most recent entry
-          const mostRecent = sortedData[0];
-          console.log("--------------", mostRecent);
-          const data = {
-            date: formatDate(mostRecent.createdAt),
-            feeling: mostRecent.feeling,
-            emotions: mostRecent.emotion,
-            activities: mostRecent.reason,
-            extraNotes: mostRecent.extraNotes,
+        const formattedData = response.data.data.map((entry) => {
+          return {
+            date: formatDate(entry.createdAt),
+            feeling: entry.feeling,
+            emotions: entry.emotion,
+            activities: entry.reason,
+            extraNotes: entry.extraNotes,
           };
-          setTrackedData(data);
-        } else {
-          console.log("No data found.");
-        }
+        });
+        console.log(formattedData);
+        object = formattedData?.reduce((acc, item) => {
+          acc[item.date] = item.feeling;
+          return acc;
+        }, {});
+        setTrackedDataObject(object);
+        setTrackedData(formattedData);
       } catch (error) {
         // Handle network or server errors
         console.error("Network error:", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchTrackedData();
-  }, [trackedData]);
+  }, []);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-  // const trackedData = mockTrackedData;
-
-  const trackedDataObject = trackedData.reduce((acc, item) => {
-    acc[item.date] = item.feeling;
-    return acc;
-  }, {});
-
+  if (!trackedData || !trackedDataObject) {
+    return <div>No data available</div>;
+  }
+  // const data = {
+  //   "2024-11-23": "veryBad",
+  //   "2024-11-24": "bad",
+  //   "2024-11-25": "veryGood",
+  //   "2024-11-26": "good",
+  //   "2024-11-27": "veryBad",
+  //   "2024-11-28": "bad",
+  // };
+  //const trackedDataObject = data;
   return (
     <>
       <Router>

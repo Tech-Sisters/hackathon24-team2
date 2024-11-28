@@ -52,26 +52,25 @@ const DataTable = ({ date, trackedData }) => {
     return <p>No data available for this date.</p>;
   }
 
-  const { baseFeeling, emotions, activities } = dataForDate;
+  const { feeling, emotions, activities, extraNotes } = dataForDate;
 
   return (
     <div className="dataTable">
       <div className="dataRow">
         <h3>Date: {formattedDate}</h3>
         <p>
-          <strong>Base Feeling (out of 5):</strong> {baseFeeling || "N/A"}
+          <strong>Base Feeling (out of 5):</strong> {feeling || "N/A"}
         </p>
         <p>
-          <strong>Emotions:</strong> {emotions ? emotions.join(", ") : "N/A"}
+          <strong>Emotions:</strong> {emotions ? emotions : "N/A"}
         </p>
         <p>
-          <strong>Activities:</strong>{" "}
-          {activities ? activities.join(", ") : "N/A"}
+          <strong>Activities:</strong> {activities ? activities : "N/A"}
         </p>
         <div>
           <strong>Extra Notes:</strong>
           <textarea
-            value={notes}
+            value={extraNotes}
             onChange={(e) => handleNoteChange(e.target.value)}
             placeholder="Add your notes here..."
             rows="4"
