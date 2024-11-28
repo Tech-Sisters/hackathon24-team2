@@ -1,27 +1,43 @@
-const data = {
-    "2024-10-28": "veryBad",
-    "2024-10-29": "neutral",
-    "2024-11-03": "neutral",
-    "2024-11-04": "good",
-    "2024-11-05": "neutral",
-    "2024-11-06": "bad",
-    "2024-11-07": "neutral",
-    "2024-11-08": "neutral",
-    "2024-11-09": "good",
-    "2024-11-10": "bad",
-    "2024-11-11": "bad",
-    "2024-11-12": "veryBad",
-    "2024-11-16": "veryGood",
-    "2024-11-17": "good",
-    "2024-11-19": "veryBad",
-    "2024-11-20": "veryBad",
-    "2024-11-21": "bad",
-    "2024-11-22": "neutral",
-    "2024-11-23": "veryBad",
-    "2024-11-24": "bad",
-    "2024-11-25": "veryGood",
-    "2024-11-26": "good",
-    "2024-11-27": "veryBad",
-    "2024-11-28": "bad",
-};
-export default data;
+
+import axios from "axios";
+
+const formatDate = (isoDateString) => {
+    const date = new Date(isoDateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+  
+    return `${year}${month}${day}`;
+  };
+  
+
+const fetchTrackedData = async () => {
+        try {
+          const response = await axios.get(
+            "http://localhost:3001/api/user-feelings/"
+          );
+          console.log(response);
+          if (response.data && Array.isArray(response.data.data)) {
+            const sortedData = response.data.data.sort(
+              (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+            );
+          const mostRecent = sortedData[0];
+          console.log("--------------", mostRecent);
+          const data = {
+            date: formatDate(mostRecent.createdAt),
+            feeling: mostRecent.feeling,
+            emotions: mostRecent.emotion,
+            activities: mostRecent.reason,
+            extraNotes: mostRecent.extraNotes,
+          };
+          return data;
+        } else {
+          console.log("No data found.");
+        }
+      }
+      catch (error) {
+          // Handle network or server errors
+          console.error("Network error:", error);
+        }
+      };
+export default fetchTrackedData;
