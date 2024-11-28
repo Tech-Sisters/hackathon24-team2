@@ -2,6 +2,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { format, parse } from "date-fns";
+import {
+  emotionWords,
+  emotionTransparentColors,
+  emotionAccentColors,
+} from "../../utils/constants";
 import "./tracker.css";
 import axios from "axios";
 const DataTable = ({ date, trackedData }) => {
@@ -60,32 +65,41 @@ const DataTable = ({ date, trackedData }) => {
   const { feeling, emotion, reason, extraNotes } = dataForDate;
 
   return (
-    <div className="dataTable">
-      <div className="dataRow">
-        <h3>Date: {formattedDate}</h3>
-        <p>
-          <strong>Base Feeling (out of 5):</strong> {feeling || "N/A"}
-        </p>
-        <p>
-          <strong>Emotions:</strong> {emotion ? emotion.join(", ") : "N/A"}
-        </p>
-        <p>
-          <strong>Activities:</strong> {reason ? reason.join(", ") : "N/A"}
-        </p>
-        <div>
-          <strong>Extra Notes:</strong>
-          <textarea
-            value={extraNotes}
-            onChange={(e) => handleNoteChange(e.target.value)}
-            placeholder="Add your notes here..."
-            rows="4"
-            className="noteTextarea"
-          />
-        </div>
-        <button onClick={handleSave} className="saveButton">
-          Save
-        </button>
-      </div>
+    <div
+      className="dataRow"
+      style={{ backgroundColor: emotionTransparentColors[feeling] }}
+    >
+      <p id="dataTitle">
+        {`On `}
+        <strong>{formattedDate}</strong>
+        {`, \nI was feeling `}
+        <strong style={{ color: emotionAccentColors[feeling] }}>
+          {emotionWords[feeling] || "N/A"}
+        </strong>
+      </p>
+      <p>
+        {`I particularly felt...`}
+        <br />
+        <strong>{emotion ? emotion.join(", ") : "N/A"}</strong>
+      </p>
+      <p>
+        {`These were because of..`}
+        <br />
+        <strong>{reason ? reason.join(", ") : "N/A"}</strong>.
+      </p>
+      <p>
+        {`Thoughts I saved for later...`}
+        <textarea
+          value={extraNotes}
+          onChange={(e) => handleNoteChange(e.target.value)}
+          placeholder="Add your notes here..."
+          rows="4"
+          className="noteTextarea"
+        />
+      </p>
+      <button onClick={handleSave} className="saveButton">
+        Save
+      </button>
     </div>
   );
 };
