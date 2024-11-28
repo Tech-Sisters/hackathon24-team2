@@ -31,4 +31,5 @@ export const emotionTransparentColors = {
     good: "rgba(251, 223, 255, 0.5)",
     veryGood: "rgba(255, 238, 184, 0.5)",
     white: "rgba(255, 255, 255, 0.5)",
+    accent: "rgba(227, 221, 214, 0.5)",
   };

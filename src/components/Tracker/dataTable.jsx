@@ -67,7 +67,11 @@ const DataTable = ({ date, trackedData }) => {
   return (
     <div
       className="dataRow"
-      style={{ backgroundColor: emotionTransparentColors[feeling] }}
+      style={{
+        backgroundColor: feeling
+          ? emotionTransparentColors[feeling]
+          : emotionTransparentColors["accent"],
+      }}
     >
       <p id="dataTitle">
         {`On `}
