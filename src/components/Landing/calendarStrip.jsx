@@ -1,9 +1,11 @@
 import { format, startOfWeek, addDays } from "date-fns";
 import { emotionColors } from "../../utils/constants";
+import { useNavigate } from "react-router-dom";
 import "./landing.css";
 
 // eslint-disable-next-line react/prop-types
 export default function CalendarStrip({ trackedData }) {
+  const navigate = useNavigate();
   const today = new Date();
   const startOfCurrentWeek = startOfWeek(today, { weekStartsOn: 0 });
   const weekDays = Array.from({ length: 7 }, (_, i) =>
@@ -24,6 +26,7 @@ export default function CalendarStrip({ trackedData }) {
           const dateString = format(date, "yyyyMMdd");
           const emotion = trackedData[dateString] || "white";
           const tileColor = emotionColors[emotion];
+
           //   const isToday = format(date, "yyyyMMdd") === format(today, "yyyyMMdd");
           const isToday =
             format(date, "yyyyMMdd") === format("2024-11-29", "yyyyMMdd"); //dummy code lol
@@ -33,6 +36,9 @@ export default function CalendarStrip({ trackedData }) {
               className={`dateTile ${isToday ? "currentDay" : ""}`}
               key={dateString}
               style={{ backgroundColor: tileColor }}
+              onClick={() => {
+                navigate(`/tracker/${dateString}`);
+              }}
             >
               {format(date, "d")}
             </div>
