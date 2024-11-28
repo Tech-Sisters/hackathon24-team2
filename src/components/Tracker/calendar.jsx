@@ -1,23 +1,32 @@
+/* eslint-disable react/prop-types */
 import React from "react";
-import { 
-  format, 
-  startOfMonth, 
-  endOfMonth, 
-  addDays, 
-  startOfWeek, 
-  endOfWeek, 
-  isFuture, 
-  isSameDay, 
-  isBefore 
+import {
+  format,
+  startOfMonth,
+  endOfMonth,
+  addDays,
+  startOfWeek,
+  endOfWeek,
+  isFuture,
+  isSameDay,
+  isBefore,
 } from "date-fns";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import "./tracker.css";
-import { Link } from "react-router-dom";
 
-// eslint-disable-next-line react/prop-types
+const emotionColors = {
+  veryBad: "var(--veryBad)",
+  bad: "var(--bad)",
+  neutral: "var(--neutral)",
+  good: "var(--good)",
+  veryGood: "var(--veryGood)",
+  white: "#fff",
+  bgSecondary: "var(--bgSecondary)",
+};
+
 const Calendar = ({ trackedData }) => {
   const today = new Date();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const getDaysInMonthGrid = (month) => {
     const start = startOfWeek(startOfMonth(month), { weekStartsOn: 0 });
@@ -31,16 +40,6 @@ const Calendar = ({ trackedData }) => {
 
   const monthDays = getDaysInMonthGrid(today);
 
-  const emotionColors = {
-    veryBad: "var(--veryBad)",
-    bad: "var(--bad)",
-    neutral: "var(--neutral)",
-    good: "var(--good)",
-    veryGood: "var(--veryGood)",
-    white: "#fff",
-    bgSecondary: "var(--bgSecondary)",
-  };
-
   let currentMonth = "";
 
   return (
@@ -48,8 +47,8 @@ const Calendar = ({ trackedData }) => {
       {monthDays.map((date) => {
         const monthName = format(date, "MMMM");
         const isFirstOfMonth = format(date, "d") === "1";
-        const dateString = format(date, "yyyy-MM-dd");
-        const formattedDateForUrl = format(date, "yyyyMMdd"); 
+        const dateString = format(date, "yyyyMMdd");
+        const formattedDateForUrl = format(date, "yyyyMMdd");
         const emotion = trackedData[dateString];
         const isToday = isSameDay(date, today);
         const isFutureDate = isFuture(date);
@@ -77,11 +76,11 @@ const Calendar = ({ trackedData }) => {
               className={`dateTile ${isToday ? "currentDay" : ""}`}
               style={{
                 backgroundColor: tileColor,
-                cursor: isFutureDate ? "not-allowed" : "pointer", 
+                cursor: isFutureDate ? "not-allowed" : "pointer",
               }}
               onClick={() => {
                 if (!isFutureDate) {
-                  navigate(`/tracker/${formattedDateForUrl}`); 
+                  navigate(`/tracker/${formattedDateForUrl}`);
                 }
               }}
             >

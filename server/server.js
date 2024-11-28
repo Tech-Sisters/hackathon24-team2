@@ -18,7 +18,13 @@ const PORT = 3001;
 connectDB();
 
 //Middleware
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 app.use(bodyParser.json()); // Parse JSON request bodies
 app.use("/api/emotions", emotionRoutes);
 app.use("/api/user-feelings", userRoutes);

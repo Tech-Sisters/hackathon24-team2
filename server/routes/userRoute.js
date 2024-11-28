@@ -3,13 +3,14 @@ import express from "express";
 const router = express.Router();
 
 router.post("/", async (req, res) => {
-  const { feeling, emotion, reason } = req.body;
+  const { feeling, emotion, reason, extraNotes } = req.body;
 
   try {
     const newUserFeeling = new User({
       feeling,
       emotion,
       reason,
+      extraNotes,
     });
     await newUserFeeling.save();
     res.status(201).json({

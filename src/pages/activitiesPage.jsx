@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Box, Typography, Chip, IconButton } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Header from "../components/header";
 import { ArrowForward, KeyboardArrowLeft } from "@mui/icons-material";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 const icons = {};
 const modules = import.meta.glob("../assets/icons/*.svg", { eager: true });
@@ -138,22 +139,31 @@ const ActivitiesPage = () => {
 
   const handleBackNavigate = () => {
     navigate(-1);
+
   };
 
 
-  const handleNavigate = () => {
-    const selectedActivityLabels = selectedFeedback.map(
+  const handleNavigate = async () => {
+    const selectedActivitiesLabels = selectedFeedback.map(
       (index) => activities[index].label
     );
-
+    const postData = {
+      feeling,
+      emotion,
+      reason: selectedActivitiesLabels,
+    };
     const dataForMaia = {
       selectedFeedbackValue: selectedFeedbackValue, // Feeling
       selectedEmotions: selectedEmotions, // Selected emotions
       selectedActivityLabels: selectedActivityLabels, // Selected activities
     };
-
-    console.log("Navigating with:", dataForMaia);
-    navigate("/maia", { state: dataForMaia });
+    try {
+      console.log("here", postData);
+      await axios.post("http://localhost:3001/api/user-feelings/", postData);
+      navigate("/maia", { state: dataForMaia });
+    } catch (error) {
+      console.error("Error submitting data:", error);
+    }
   };
 
   return (
@@ -181,7 +191,7 @@ const ActivitiesPage = () => {
             textAlign: "center",
             margin: "2rem",
             paddingTop: "20px",
-            paddingBottom: "50px"
+            paddingBottom: "50px",
           }}
         >
           Which moments or activities shaped your opinions of today?
