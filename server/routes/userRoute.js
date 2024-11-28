@@ -28,7 +28,6 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const users = await User.find();
-    console.log(users);
     res
       .status(200)
       .json({ message: "Users fetched successfully", data: users });
