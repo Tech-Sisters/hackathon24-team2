@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Box, Typography, Chip, IconButton } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Header from "../components/header";
 import { ArrowForward, KeyboardArrowLeft } from "@mui/icons-material";
+import axios from "axios";
 
 const icons = {};
 const modules = import.meta.glob("../assets/icons/*.svg", { eager: true });
@@ -15,7 +16,11 @@ for (const path in modules) {
 const ActivitiesPage = () => {
   const [selectedFeedback, setSelectedFeedback] = useState([]);
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const { feeling, emotion } = location.state || {
+    feeling: null,
+    emotion: null,
+  };
   const activities = [
     {
       icon: icons["Family"],
@@ -120,12 +125,27 @@ const ActivitiesPage = () => {
   };
 
   const handleBackNavigate = () => {
-    navigate(-1); };
-
-  const handleNavigate = () => {
-    //handleSubmit here too
-    navigate("/maia");
+    navigate(-1);
   };
+
+  const handleNavigate = async () => {
+    const selectedActivitiesLabels = selectedFeedback.map(
+      (index) => activities[index].label
+    );
+    const postData = {
+      feeling,
+      emotion,
+      reason: selectedActivitiesLabels,
+    };
+    try {
+      console.log("here", postData);
+      await axios.post("http://localhost:3001/api/user-feelings/", postData);
+      navigate("/maia");
+    } catch (error) {
+      console.error("Error submitting data:", error);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -151,7 +171,7 @@ const ActivitiesPage = () => {
             textAlign: "center",
             margin: "2rem",
             paddingTop: "20px",
-            paddingBottom: "50px"
+            paddingBottom: "50px",
           }}
         >
           Which moments or activities shaped your opinions of today?
@@ -205,26 +225,26 @@ const ActivitiesPage = () => {
           ))}
         </Box>
       </Box>
-         <div
+      <div
         style={{
           display: "flex",
-          justifyContent: "center", 
-          alignItems: "center", 
+          justifyContent: "center",
+          alignItems: "center",
           marginTop: "100px",
         }}
       >
-      <IconButton
-        onClick={handleNavigate}
-        sx={{
-          color: "var(--main)",
-          opacity: selectedFeedback.length === 0 ? 0 : 1, 
-          pointerEvents: selectedFeedback.length === 0 ? "none" : "auto", 
-          transition: "opacity 0.3s ease",
-        }}
-        disabled={selectedFeedback.length === 0}
-      >
-        <ArrowForward sx={{ fontSize: "2rem",  transform: "scaleX(1.5)" }} />
-      </IconButton>
+        <IconButton
+          onClick={handleNavigate}
+          sx={{
+            color: "var(--main)",
+            opacity: selectedFeedback.length === 0 ? 0 : 1,
+            pointerEvents: selectedFeedback.length === 0 ? "none" : "auto",
+            transition: "opacity 0.3s ease",
+          }}
+          disabled={selectedFeedback.length === 0}
+        >
+          <ArrowForward sx={{ fontSize: "2rem", transform: "scaleX(1.5)" }} />
+        </IconButton>
       </div>
     </>
   );

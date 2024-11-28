@@ -162,15 +162,13 @@ const EmotionPage = () => {
         bad: ["bad", "veryBad", "neutral", "good", "veryGood"],
         veryBad: ["veryBad", "bad", "neutral", "good", "veryGood"],
       };
-  
+
       const priorityOrder = priorityMap[selectedFeedbackValue];
-  
+
       const reordered = emotions.sort((a, b) => {
-        return (
-          priorityOrder.indexOf(a.value) - priorityOrder.indexOf(b.value)
-        );
+        return priorityOrder.indexOf(a.value) - priorityOrder.indexOf(b.value);
       });
-  
+
       setReorderedEmotions(reordered);
     } else {
       setReorderedEmotions(emotions);
@@ -188,10 +186,17 @@ const EmotionPage = () => {
   };
 
   const handleBackNavigate = () => {
-    navigate(-1); };
+    navigate(-1);
+  };
 
   const handleNavigate = () => {
-    navigate("/activities");
+    const selectedEmotionLabels = selectedEmotions.map(
+      (index) => reorderedEmotions[index].label
+    );
+    console.log(selectedFeedbackValue, selectedEmotionLabels);
+    navigate("/activities", {
+      state: { feeling: selectedFeedbackValue, emotion: selectedEmotionLabels },
+    });
   };
   return (
     <>
@@ -218,7 +223,7 @@ const EmotionPage = () => {
             textAlign: "center",
             margin: "2rem",
             paddingTop: "20px",
-            paddingBottom: "50px"
+            paddingBottom: "50px",
           }}
         >
           What emotions are sitting with you right now?
@@ -270,23 +275,23 @@ const EmotionPage = () => {
       <div
         style={{
           display: "flex",
-          justifyContent: "center", 
-          alignItems: "center", 
+          justifyContent: "center",
+          alignItems: "center",
           marginTop: "100px",
         }}
       >
-      <IconButton
-        onClick={handleNavigate}
-        sx={{
-          color: "var(--main)",
-          opacity: selectedEmotions.length === 0 ? 0 : 1, 
-          pointerEvents: selectedEmotions.length === 0 ? "none" : "auto", 
-          transition: "opacity 0.3s ease",
-        }}
-        disabled={selectedEmotions.length === 0}
-      >
-        <ArrowForward sx={{ fontSize: "2rem",  transform: "scaleX(1.5)" }} />
-      </IconButton>
+        <IconButton
+          onClick={handleNavigate}
+          sx={{
+            color: "var(--main)",
+            opacity: selectedEmotions.length === 0 ? 0 : 1,
+            pointerEvents: selectedEmotions.length === 0 ? "none" : "auto",
+            transition: "opacity 0.3s ease",
+          }}
+          disabled={selectedEmotions.length === 0}
+        >
+          <ArrowForward sx={{ fontSize: "2rem", transform: "scaleX(1.5)" }} />
+        </IconButton>
       </div>
     </>
   );

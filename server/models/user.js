@@ -10,17 +10,17 @@ const userSchema = new Schema(
       enum: ["veryBad", "bad", "neutral", "good", "veryGood"],
     },
     emotion: {
-      type: String,
+      type: [String],
       required: true,
     },
     reason: {
-      type: String,
+      type: [String],
       required: true,
     },
     extraNotes: {
       type: String,
       required: false,
-    }
+    },
   },
   {
     timestamps: true,
