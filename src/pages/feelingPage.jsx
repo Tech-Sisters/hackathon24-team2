@@ -1,3 +1,4 @@
+
 /** @jsxImportSource @emotion/react */
 import { useState } from "react";
 import { Box, Typography, IconButton } from "@mui/material";
@@ -56,10 +57,12 @@ const FeelingPage = () => {
   };
 
   const handleBackNavigate = () => {
-    navigate(-1); };
+    navigate(-1);
+  };
 
   const handleNavigate = () => {
     if (selectedFeedback !== null) {
+      // Pass the selected feeling (value) to the next page
       navigate("/emotion", {
         state: { selectedFeedbackValue: faces[selectedFeedback].value },
       });
@@ -151,23 +154,23 @@ const FeelingPage = () => {
       <div
         style={{
           display: "flex",
-          justifyContent: "center", 
-          alignItems: "center", 
+          justifyContent: "center",
+          alignItems: "center",
           marginTop: "220px",
         }}
       >
-      <IconButton
-        onClick={handleNavigate}
-        sx={{
-          color: "var(--main)",
-          opacity: selectedFeedback === null? 0 : 1, 
-          pointerEvents: selectedFeedback === null? "none" : "auto", 
-          transition: "opacity 0.3s ease",
-        }}
-        disabled={selectedFeedback === null}
-      >
-        <ArrowForward sx={{ fontSize: "2rem",  transform: "scaleX(1.5)" }} />
-      </IconButton>
+        <IconButton
+          onClick={handleNavigate}
+          sx={{
+            color: "var(--main)",
+            opacity: selectedFeedback === null ? 0 : 1,
+            pointerEvents: selectedFeedback === null ? "none" : "auto",
+            transition: "opacity 0.3s ease",
+          }}
+          disabled={selectedFeedback === null}
+        >
+          <ArrowForward sx={{ fontSize: "2rem", transform: "scaleX(1.5)" }} />
+        </IconButton>
       </div>
     </>
   );

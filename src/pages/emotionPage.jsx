@@ -154,7 +154,7 @@ const EmotionPage = () => {
   const [reorderedEmotions, setReorderedEmotions] = useState([]);
 
   useEffect(() => {
-    if (selectedFeedbackValue) {
+    if (!selectedFeedbackValue || reorderedEmotions.length === 0) {
       const priorityMap = {
         good: ["good", "veryGood", "neutral", "bad", "veryBad"],
         veryGood: ["veryGood", "good", "neutral", "bad", "veryBad"],
@@ -190,14 +190,30 @@ const EmotionPage = () => {
   };
 
   const handleNavigate = () => {
-    const selectedEmotionLabels = selectedEmotions.map(
-      (index) => reorderedEmotions[index].label
+    const selectedEmotionObjects = reorderedEmotions.filter((_, index) =>
+      selectedEmotions.includes(index)
     );
-    console.log(selectedFeedbackValue, selectedEmotionLabels);
-    navigate("/activities", {
-      state: { feeling: selectedFeedbackValue, emotion: selectedEmotionLabels },
-    });
+    const selectedEmotionLabels = selectedEmotionObjects.map(
+      (emotion) => emotion.label
+    );
+
+    if (selectedFeedbackValue && selectedEmotionLabels.length > 0) {
+      const dataForActivities = {
+        selectedFeedbackValue: selectedFeedbackValue,
+        selectedEmotions: selectedEmotionLabels,
+      };
+
+      navigate("/activities", {
+        state: {
+          feeling: dataForActivities.selectedFeedbackValue,
+          emotion: dataForActivities.selectedEmotions,
+        },
+      });
+    } else {
+      console.error("Error: Missing data (Feeling or Emotions)");
+    }
   };
+
   return (
     <>
       <Header />
@@ -275,6 +291,8 @@ const EmotionPage = () => {
       <div
         style={{
           display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
           justifyContent: "center",
           alignItems: "center",
           marginTop: "100px",
