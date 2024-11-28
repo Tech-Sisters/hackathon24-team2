@@ -9,7 +9,7 @@ import ActivitiesPage from "./pages/activitiesPage";
 import Chatbot from "./pages/chatbot";
 import Tracker from "./pages/tracker";
 import TrackedDay from "./pages/trackedDay";
-// import mockTrackedData from "./components/mockData";
+// import mockTrackedData from "./utils/mockData";
 
 const formatDate = (isoDateString) => {
   const date = new Date(isoDateString);
@@ -61,6 +61,11 @@ function App() {
     return <div>Loading...</div>;
   }
 
+  // const mockObject = mockTrackedData?.reduce((acc, item) => {
+  //   acc[item.date] = item.feeling;
+  //   return acc;
+  // }, {});
+
   if (!trackedData || !trackedDataObject) {
     return <div>No data available</div>;
   }
@@ -82,10 +87,7 @@ function App() {
               path="/tracker"
               element={<Tracker trackedData={trackedDataObject} />}
             />
-            <Route
-              path="/tracker/:date"
-              element={<TrackedDay trackedData={trackedData} />}
-            />
+            <Route path="/tracker/:date" element={<TrackedDay />} />
           </Routes>
         </div>
       </Router>

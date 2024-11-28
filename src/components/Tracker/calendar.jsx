@@ -12,15 +12,11 @@ import {
   isBefore,
 } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { emotionColors } from "../../utils/constants";
 import "./tracker.css";
 
-const emotionColors = {
-  veryBad: "var(--veryBad)",
-  bad: "var(--bad)",
-  neutral: "var(--neutral)",
-  good: "var(--good)",
-  veryGood: "var(--veryGood)",
-  white: "#fff",
+const colors = {
+  ...emotionColors,
   bgSecondary: "var(--bgSecondary)",
 };
 
@@ -56,11 +52,11 @@ const Calendar = ({ trackedData }) => {
 
         let tileColor;
         if (isFutureDate) {
-          tileColor = emotionColors.white;
+          tileColor = colors.white;
         } else if (emotion) {
-          tileColor = emotionColors[emotion];
+          tileColor = colors[emotion];
         } else if (isPastDate) {
-          tileColor = emotionColors.bgSecondary;
+          tileColor = colors.bgSecondary;
         }
 
         let showMonthName = false;

@@ -6,12 +6,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { KeyboardArrowLeft } from "@mui/icons-material";
 import axios from "axios";
 import { useState, useEffect } from "react";
-// eslint-disable-next-line react/prop-types
+
 const formatDateFromNumber = (input) => {
   const str = input.toString();
   return `${str.slice(0, 4)}-${str.slice(4, 6)}-${str.slice(6, 8)}`;
 };
-const TrackedDay = ({ trackedData }) => {
+const TrackedDay = () => {
   const navigate = useNavigate();
   const { date } = useParams();
   const [trackedDayData, setTrackedDayData] = useState(null);
