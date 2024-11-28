@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 
 export default function Chatbot() {
   const location = useLocation();
+  console.log("location", location)
   const [userInput, setUserInput] = useState("");
   const [startTimestamp, setStartTimestamp] = useState(new Date().toISOString());
   const [sessionId, setSessionId] = useState(() => "session-" + Math.random().toString(36).substr(2, 9));
@@ -14,10 +15,12 @@ export default function Chatbot() {
   const [conversation, setConversation] = useState([
     { user: "", chatbot: "As-salamu alaykum, I am Maia. Please response." }
   ]);
+  const { selectedFeedbackValue, selectedEmotions, selectedActivityLabels } = location.state || {
+    selectedFeedbackValue: null,
+    selectedEmotions: [],
+    selectedActivityLabels: []
+  };
 
-  const selectedActivityLabels = location?.state?.selectedActivityLabels || [];
-  const selectedEmotions = location?.state?.selectedEmotions || [];
-  const selectedFeedbackValue = location?.state?.selectedFeedbackValue || null;
   const [responseSent, setResponseSent] = useState(false);
 
   // Load conversation from sessionStorage when component mounts
@@ -65,6 +68,7 @@ export default function Chatbot() {
         const data = await response.json();
         const chatbotResponse = { user: "", chatbot: data.bot_response };
         setConversation((prevConversation) => [...prevConversation, chatbotResponse]);
+        console.log(location.state)
       } catch (error) {
         console.error("Error communicating with the backend:", error);
         const errorMessage = { user: "", chatbot: "Sorry, I couldn't process your request. Please try again." };
