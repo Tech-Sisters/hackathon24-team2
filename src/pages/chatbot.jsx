@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -6,12 +6,88 @@ import {
 } from "@mui/material";
 import HeaderMain from "../components/Landing/headerMain";
 import Footer from "../components/footer";
+import { useLocation } from "react-router-dom";
+
 
 export default function Chatbot() {
+
+  const generateSessionId = () => {
+    return "session-" + Math.random().toString(36).substr(2, 9);
+  };
+  const generatedSessionId = generateSessionId();
+  setSessionId(generatedSessionId);
+  setStartTimestamp(new Date().toISOString());
+
+  const location = useLocation();
+
   const [messages, setMessages] = useState([
-    { sender: "bot", text: "Hello, I am Maia. How can I assist you today?" },
+    { sender: "bot", text: "Hello, I am Maia. How can I assist you today?" }
   ]);
+
+
   const [userInput, setUserInput] = useState("");
+  const [startTimestamp, setStartTimestamp] = useState(null);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          sender: "bot",
+          text: "Wa alaikum assalam. Thoughtfulness can lead to great understanding. The Prophet Muhammad (peace be upon him) said, 'Think well, for thinking is a part of worship.' Are you comfortable sharing what's on your mind today? Perhaps we can explore these thoughts together.",
+        },
+      ]);
+    }, 2000); // Delay for 2 seconds before sending the second message
+
+    return () => clearTimeout(timeout); // Cleanup timeout on component unmount
+  }, []);
+
+
+  const sendMessage = async () => {
+    if (userInput.trim()) {
+      const newMessage = { sender: "user", text: userInput };
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+
+      try {
+        const dataForBackend = {
+          sessionId: generatedSessionId,
+          selectedActivityLabels: location.state.selectedActivityLabels,
+          selectedEmotions: location.state.selectedEmotions,
+          selectedFeedbackValue: location.state.selectedFeedbackValue,
+          message: userInput,
+          bot_response: botResponse,
+
+        };
+
+        const response = await fetch("http://127.0.0.1:5000/api/chat", {
+          method: "POST", // Changed to POST for sending data in body
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataForBackend),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch response from the backend");
+        }
+
+        const data = await response.json();
+        const botResponse = { sender: "bot", text: data.bot_response };
+        setMessages((prevMessages) => [...prevMessages, botResponse]);
+      } catch (error) {
+        console.error("Error communicating with the backend:", error);
+        const errorMessage = {
+          sender: "bot",
+          text: "Sorry, I couldn't process your request. Please try again.",
+        };
+        setMessages((prevMessages) => [...prevMessages, errorMessage]);
+      }
+    }
+
+    setUserInput(""); // Clear input field after sending message
+  };
+
+
 
   {
     /* Check chatbot with mock data*/
@@ -83,39 +159,6 @@ export default function Chatbot() {
 }
   */
   }
-
-  const sendMessage = async () => {
-    if (userInput.trim()) {
-      const newMessage = { sender: "user", text: userInput };
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
-
-      try {
-        // Make API call to the Flask backend
-        const response = await fetch(`http://127.0.0.1:5000/api/chat?msg=${encodeURIComponent(userInput)}`, {
-          method: "GET",
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch response from the backend");
-        }
-
-        const data = await response.json();
-
-        // Add bot's response to the chat
-        const botResponse = { sender: "bot", text: data.bot_response };
-        setMessages((prevMessages) => [...prevMessages, botResponse]);
-      } catch (error) {
-        console.error("Error communicating with the backend:", error);
-        const errorMessage = {
-          sender: "bot",
-          text: "Sorry, I couldn't process your request. Please try again.",
-        };
-        setMessages((prevMessages) => [...prevMessages, errorMessage]);
-      }
-    }
-
-    setUserInput(""); // Clear input field
-  };
 
 
   // // Handle sending a message

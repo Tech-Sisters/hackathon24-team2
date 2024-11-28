@@ -3,6 +3,7 @@ import { Box, Typography, Chip, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/header";
 import { ArrowForward, KeyboardArrowLeft } from "@mui/icons-material";
+import { useLocation } from "react-router-dom";
 
 const icons = {};
 const modules = import.meta.glob("../assets/icons/*.svg", { eager: true });
@@ -13,8 +14,24 @@ for (const path in modules) {
 }
 
 const ActivitiesPage = () => {
+
   const [selectedFeedback, setSelectedFeedback] = useState([]);
+
   const navigate = useNavigate();
+
+  const location = useLocation();
+
+  // Log location.state to debug
+  console.log("Location State:", location.state)
+
+  const { selectedFeedbackValue, selectedEmotions } = location.state?.dataForActivities || {
+    selectedFeedbackValue: "", // Default to empty string if no feedback value
+    selectedEmotions: [], // Default to an empty array if no emotions selected
+  };
+
+  // Log the values to verify
+  console.log("Selected Feedback Value in Activities:", selectedFeedbackValue);
+  console.log("Selected Emotions in Activities:", selectedEmotions)
 
   const activities = [
     {
@@ -120,12 +137,25 @@ const ActivitiesPage = () => {
   };
 
   const handleBackNavigate = () => {
-    navigate(-1); };
+    navigate(-1);
+  };
+
 
   const handleNavigate = () => {
-    //handleSubmit here too
-    navigate("/maia");
+    const selectedActivityLabels = selectedFeedback.map(
+      (index) => activities[index].label
+    );
+
+    const dataForMaia = {
+      selectedFeedbackValue: selectedFeedbackValue, // Feeling
+      selectedEmotions: selectedEmotions, // Selected emotions
+      selectedActivityLabels: selectedActivityLabels, // Selected activities
+    };
+
+    console.log("Navigating with:", dataForMaia);
+    navigate("/maia", { state: dataForMaia });
   };
+
   return (
     <>
       <Header />
@@ -205,26 +235,26 @@ const ActivitiesPage = () => {
           ))}
         </Box>
       </Box>
-         <div
+      <div
         style={{
           display: "flex",
-          justifyContent: "center", 
-          alignItems: "center", 
+          justifyContent: "center",
+          alignItems: "center",
           marginTop: "100px",
         }}
       >
-      <IconButton
-        onClick={handleNavigate}
-        sx={{
-          color: "var(--main)",
-          opacity: selectedFeedback.length === 0 ? 0 : 1, 
-          pointerEvents: selectedFeedback.length === 0 ? "none" : "auto", 
-          transition: "opacity 0.3s ease",
-        }}
-        disabled={selectedFeedback.length === 0}
-      >
-        <ArrowForward sx={{ fontSize: "2rem",  transform: "scaleX(1.5)" }} />
-      </IconButton>
+        <IconButton
+          onClick={handleNavigate}
+          sx={{
+            color: "var(--main)",
+            opacity: selectedFeedback.length === 0 ? 0 : 1,
+            pointerEvents: selectedFeedback.length === 0 ? "none" : "auto",
+            transition: "opacity 0.3s ease",
+          }}
+          disabled={selectedFeedback.length === 0}
+        >
+          <ArrowForward sx={{ fontSize: "2rem", transform: "scaleX(1.5)" }} />
+        </IconButton>
       </div>
     </>
   );

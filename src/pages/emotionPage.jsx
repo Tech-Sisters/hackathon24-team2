@@ -10,6 +10,7 @@ const EmotionPage = () => {
   const { selectedFeedbackValue } = location.state || {
     selectedFeedbackValue: null,
   };
+  console.log(selectedFeedbackValue)
   const emotions = [
     {
       label: "Anxious",
@@ -154,7 +155,7 @@ const EmotionPage = () => {
   const [reorderedEmotions, setReorderedEmotions] = useState([]);
 
   useEffect(() => {
-    if (selectedFeedbackValue) {
+    if (!selectedFeedbackValue || reorderedEmotions.length === 0) {
       const priorityMap = {
         good: ["good", "veryGood", "neutral", "bad", "veryBad"],
         veryGood: ["veryGood", "good", "neutral", "bad", "veryBad"],
@@ -162,15 +163,15 @@ const EmotionPage = () => {
         bad: ["bad", "veryBad", "neutral", "good", "veryGood"],
         veryBad: ["veryBad", "bad", "neutral", "good", "veryGood"],
       };
-  
+
       const priorityOrder = priorityMap[selectedFeedbackValue];
-  
+
       const reordered = emotions.sort((a, b) => {
         return (
           priorityOrder.indexOf(a.value) - priorityOrder.indexOf(b.value)
         );
       });
-  
+
       setReorderedEmotions(reordered);
     } else {
       setReorderedEmotions(emotions);
@@ -188,11 +189,34 @@ const EmotionPage = () => {
   };
 
   const handleBackNavigate = () => {
-    navigate(-1); };
+    navigate(-1);
+  };
 
   const handleNavigate = () => {
-    navigate("/activities");
+    console.log("Selected Emotions Array:", selectedEmotions);
+    const selectedEmotionObjects = reorderedEmotions.filter((_, index) =>
+      selectedEmotions.includes(index)
+    );
+    const selectedEmotionLabels = selectedEmotionObjects.map(
+      (emotion) => emotion.label
+    );
+
+    console.log("Selected Emotion Labels:", selectedEmotionLabels);
+    console.log("Selected Feedback Value:", selectedFeedbackValue);
+
+    if (selectedFeedbackValue && selectedEmotionLabels.length > 0) {
+      const dataForActivities = {
+        selectedFeedbackValue: selectedFeedbackValue,
+        selectedEmotions: selectedEmotionLabels,
+      };
+
+      console.log("Navigating with dataForActivities:", dataForActivities);
+      navigate("/activities", { state: { dataForActivities } });
+    } else {
+      console.error("Error: Missing data (Feeling or Emotions)");
+    }
   };
+
   return (
     <>
       <Header />
@@ -270,23 +294,23 @@ const EmotionPage = () => {
       <div
         style={{
           display: "flex",
-          justifyContent: "center", 
-          alignItems: "center", 
+          justifyContent: "center",
+          alignItems: "center",
           marginTop: "100px",
         }}
       >
-      <IconButton
-        onClick={handleNavigate}
-        sx={{
-          color: "var(--main)",
-          opacity: selectedEmotions.length === 0 ? 0 : 1, 
-          pointerEvents: selectedEmotions.length === 0 ? "none" : "auto", 
-          transition: "opacity 0.3s ease",
-        }}
-        disabled={selectedEmotions.length === 0}
-      >
-        <ArrowForward sx={{ fontSize: "2rem",  transform: "scaleX(1.5)" }} />
-      </IconButton>
+        <IconButton
+          onClick={handleNavigate}
+          sx={{
+            color: "var(--main)",
+            opacity: selectedEmotions.length === 0 ? 0 : 1,
+            pointerEvents: selectedEmotions.length === 0 ? "none" : "auto",
+            transition: "opacity 0.3s ease",
+          }}
+          disabled={selectedEmotions.length === 0}
+        >
+          <ArrowForward sx={{ fontSize: "2rem", transform: "scaleX(1.5)" }} />
+        </IconButton>
       </div>
     </>
   );
