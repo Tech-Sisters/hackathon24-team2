@@ -42,7 +42,6 @@ function App() {
             extraNotes: entry.extraNotes,
           };
         });
-        console.log(formattedData);
         object = formattedData?.reduce((acc, item) => {
           acc[item.date] = item.feeling;
           return acc;
