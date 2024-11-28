@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { Box, Typography, TextField } from "@mui/material";
 import HeaderMain from "../components/Landing/headerMain";
@@ -7,12 +8,20 @@ import { useLocation } from "react-router-dom";
 export default function Chatbot() {
   const location = useLocation();
   const [userInput, setUserInput] = useState("");
-  const [startTimestamp, setStartTimestamp] = useState(new Date().toISOString());
-  const [sessionId, setSessionId] = useState(() => "session-" + Math.random().toString(36).substr(2, 9));
+  const [startTimestamp, setStartTimestamp] = useState(
+    new Date().toISOString()
+  );
+  const [sessionId, setSessionId] = useState(
+    () => "session-" + Math.random().toString(36).substr(2, 9)
+  );
 
   // Initialize conversation as an array, not an object
   const [conversation, setConversation] = useState([
-    { user: "", chatbot: "As-salamu alaykum, I am Maia. Please response." }
+    {
+      user: "",
+      chatbot:
+        "As-salamu alaykum! Just checking in—want to chat about your day?",
+    },
   ]);
 
   const selectedActivityLabels = location?.state?.selectedActivityLabels || [];
@@ -33,13 +42,15 @@ export default function Chatbot() {
     sessionStorage.setItem("conversation", JSON.stringify(conversation));
   }, [conversation]);
 
-
   // Handle sending a message
   const sendMessage = async () => {
     if (userInput.trim()) {
       // Add user message to conversation
       const newUserMessage = { user: userInput, chatbot: "" };
-      setConversation((prevConversation) => [...prevConversation, newUserMessage]);
+      setConversation((prevConversation) => [
+        ...prevConversation,
+        newUserMessage,
+      ]);
 
       try {
         const dataForBackend = {
@@ -64,11 +75,20 @@ export default function Chatbot() {
 
         const data = await response.json();
         const chatbotResponse = { user: "", chatbot: data.bot_response };
-        setConversation((prevConversation) => [...prevConversation, chatbotResponse]);
+        setConversation((prevConversation) => [
+          ...prevConversation,
+          chatbotResponse,
+        ]);
       } catch (error) {
         console.error("Error communicating with the backend:", error);
-        const errorMessage = { user: "", chatbot: "Sorry, I couldn't process your request. Please try again." };
-        setConversation((prevConversation) => [...prevConversation, errorMessage]);
+        const errorMessage = {
+          user: "",
+          chatbot: "Sorry, I couldn't process your request. Please try again.",
+        };
+        setConversation((prevConversation) => [
+          ...prevConversation,
+          errorMessage,
+        ]);
       }
     }
 
@@ -79,22 +99,25 @@ export default function Chatbot() {
     const conversationData = {
       sessionId,
       startTimestamp,
-      selectedActivityLabels: location.state.selectedActivityLabels,
-      selectedEmotions: location.state.selectedEmotions,
-      selectedFeedbackValue: location.state.selectedFeedbackValue,
+      selectedActivityLabels: location?.state?.selectedActivityLabels,
+      selectedEmotions: location?.state?.selectedEmotions,
+      selectedFeedbackValue: location?.state?.selectedFeedbackValue,
       conversation: conversation,
     };
 
-    console.log("Sending conversation data:", conversationData);  // Log the data you're sending to check if it's correct
+    console.log("Sending conversation data:", conversationData); // Log the data you're sending to check if it's correct
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/api/save-conversation", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(conversationData),
-      });
+      const response = await fetch(
+        "http://127.0.0.1:5000/api/save-conversation",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(conversationData),
+        }
+      );
 
       if (!response.ok) throw new Error("Failed to save conversation data");
       console.log("Conversation data saved successfully.");
@@ -117,7 +140,15 @@ export default function Chatbot() {
       saveConversationToDatabase(); // Also save conversation on component unmount
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [conversation, sessionId, startTimestamp, location.state.selectedActivityLabels, location.state.selectedEmotions, location.state.selectedFeedbackValue]);
+  }, [
+    conversation,
+    sessionId,
+    startTimestamp,
+    location?.state?.selectedActivityLabels,
+    location?.state?.selectedEmotions,
+    location?.state?.selectedFeedbackValue,
+    saveConversationToDatabase,
+  ]);
 
   return (
     <>
@@ -154,9 +185,21 @@ export default function Chatbot() {
       >
         {/* Render conversation messages */}
         {conversation.map((message, index) => (
-          <Box key={index} sx={{ textAlign: message.user ? "right" : "left", margin: "10px", padding: "8px", borderRadius: "8px", backgroundColor: message.user ? "#e0f7fa" : "#fce4ec", alignSelf: message.user ? "flex-end" : "flex-start", maxWidth: "70%" }}>
+          <Box
+            key={index}
+            sx={{
+              textAlign: message.user ? "right" : "left",
+              margin: "10px",
+              padding: "8px",
+              borderRadius: "8px",
+              backgroundColor: message.user ? "#e0f7fa" : "#fce4ec",
+              alignSelf: message.user ? "flex-end" : "flex-start",
+              maxWidth: "70%",
+            }}
+          >
             <Typography variant="body1">
-              <strong>{message.user ? "User" : "Chatbot"}:</strong> {message.user || message.chatbot}
+              <strong>{message.user ? "User" : "Chatbot"}:</strong>{" "}
+              {message.user || message.chatbot}
             </Typography>
           </Box>
         ))}

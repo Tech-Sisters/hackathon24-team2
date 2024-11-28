@@ -293,8 +293,6 @@ const EmotionPage = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          justifyContent: "center",
-          alignItems: "center",
           marginTop: "100px",
         }}
       >
