@@ -97,17 +97,17 @@ def get_bot_response():
         else:
             severity_level = 'slightly'
         combined_prompt =combined_prompt = f"""
-            The user has shared the following:
+        The user has shared the following:
 
-            1. **How did your day feel today?** The user described their day as: {severity_level}.
-            2. **What emotions are sitting with you right now?** The user is feeling {selected_emotions}.
-            3. **Which moments or activities shaped your opinions of today?** The user mentioned that today they were involved in: {selected_activity}.
-            4. **User’s message**: {user_text}, if the use says As-salamu alaykum, respond accordingly to any greetings
+        1. **How did your day feel today?** The user described their day as: {severity_level}.
+        2. **What emotions are sitting with you right now?** The user is feeling {selected_emotions}.
+        3. **Which moments or activities shaped your opinions of today?** The user mentioned that today they were involved in: {selected_activity}.
+        4. **User’s message**: {user_text}, if the use says As-salamu alaykum, respond accordingly to any greetings
 
-            Based on this, consider the user’s emotional state and the context provided to offer relevant Islamic advice, Hadiths, Quranic verses, and stories from the Sahabah. Be empathetic and offer guidance according to the severity of their emotions.
+        Based on this, consider the user’s emotional state and the context provided to offer relevant Islamic advice, Hadiths, Quranic verses, and stories from the Sahabah. Be empathetic and offer guidance according to the severity of their emotions.
 
-            Please respond with appropriate Islamic wisdom to help the user navigate their emotions and bring them closer to Allah (SWT).
-            """
+        Please respond with appropriate Islamic wisdom to help the user navigate their emotions and bring them closer to Allah (SWT).
+        """
 
         # Send the combined message to the chatbot
         response = chat.send_message(combined_prompt)
@@ -127,9 +127,9 @@ def store_session_data():
 
         session_id = data.get("sessionId")
         conversation = data.get("conversation", [])
-        selected_emotions = data.get("selectedEmotions", '')
+        selected_emotions = data.get("emotion", '')
         selected_activity = data.get("selectedActivityLabels", '')
-        selected_feedback_value = data.get("selectedFeedbackValue", '')
+        selected_feedback_value = data.get("feeling", '')
 
         if not conversation:
             print("No conversation data provided.")  # Log if conversation is empty or missing
