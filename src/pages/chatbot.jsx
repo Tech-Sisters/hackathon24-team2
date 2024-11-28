@@ -4,6 +4,8 @@ import { Box, Typography, TextField } from "@mui/material";
 import HeaderMain from "../components/Landing/headerMain";
 import Footer from "../components/footer";
 import { useLocation } from "react-router-dom";
+import SendIcon from "@mui/icons-material/Send";
+import "../components/ChatBot/chatbot.css";
 
 export default function Chatbot() {
   const location = useLocation();
@@ -153,70 +155,29 @@ export default function Chatbot() {
   return (
     <>
       <HeaderMain />
-      <Box
-        sx={{
-          padding: "16px",
-          textAlign: "center",
-          color: "black",
-          fontSize: "24px",
-          fontWeight: "bold",
-          flexShrink: 0,
-          display: "flex",
-          justifyContent: "center",
-          margin: "10px",
-        }}
-      >
-        Maia Chatbot
-      </Box>
-
-      <Box
-        sx={{
-          height: "60vh", // Adjust height as needed
-          width: "80vw", // Adjust width as needed
-          overflowY: "auto",
-          border: "1px solid #ccc",
-          borderRadius: "8px",
-          padding: "16px",
-          margin: "10px",
-          backgroundColor: "#fff",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <Box className="chatBox">
         {/* Render conversation messages */}
         {conversation.map((message, index) => (
           <Box
             key={index}
             sx={{
               textAlign: message.user ? "right" : "left",
-              margin: "10px",
+              margin: "10px 5px",
               padding: "8px",
               borderRadius: "8px",
-              backgroundColor: message.user ? "#e0f7fa" : "#fce4ec",
+              backgroundColor: message.user ? "#E3DDD6" : "#7E736E",
+              color: message.user ? "#000" : "#fff",
               alignSelf: message.user ? "flex-end" : "flex-start",
               maxWidth: "70%",
             }}
           >
             <Typography variant="body1">
-              <strong>{message.user ? "User" : "Chatbot"}:</strong>{" "}
               {message.user || message.chatbot}
             </Typography>
           </Box>
         ))}
       </Box>
-
-      <Box
-        sx={{
-          padding: "8px",
-          backgroundColor: "#fff",
-          borderTop: "1px solid #ddd",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          margin: "10px",
-          width: "80vw",
-        }}
-      >
+      <Box className="inputBox">
         <TextField
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
@@ -226,9 +187,8 @@ export default function Chatbot() {
           fullWidth
           placeholder="Type a message..."
         />
-
         <button className="send-button" onClick={sendMessage}>
-          Send
+          {<SendIcon />}
         </button>
       </Box>
       <Footer />
