@@ -14,13 +14,29 @@ for (const path in modules) {
 }
 
 const ActivitiesPage = () => {
+
   const [selectedFeedback, setSelectedFeedback] = useState([]);
+
   const navigate = useNavigate();
+
   const location = useLocation();
   const { feeling, emotion } = location.state || {
     feeling: null,
     emotion: null,
   };
+
+  // Log location.state to debug
+  console.log("Location State:", location.state)
+
+  const { selectedFeedbackValue, selectedEmotions } = location.state?.dataForActivities || {
+    selectedFeedbackValue: "",
+    selectedEmotions: [],
+  };
+
+  // Log the values to verify
+  console.log("Selected Feedback Value in Activities:", selectedFeedbackValue);
+  console.log("Selected Emotions in Activities:", selectedEmotions)
+
   const activities = [
     {
       icon: icons["Family"],
@@ -126,7 +142,9 @@ const ActivitiesPage = () => {
 
   const handleBackNavigate = () => {
     navigate(-1);
+
   };
+
 
   const handleNavigate = async () => {
     const selectedActivitiesLabels = selectedFeedback.map(
@@ -137,10 +155,15 @@ const ActivitiesPage = () => {
       emotion,
       reason: selectedActivitiesLabels,
     };
+    const dataForMaia = {
+      selectedFeedbackValue: selectedFeedbackValue,
+      selectedEmotions: selectedEmotions, // Selected emotions
+      selectedActivityLabels: selectedActivitiesLabels, // Selected activities
+    };
     try {
       console.log("here", postData);
       await axios.post("http://localhost:3001/api/user-feelings/", postData);
-      navigate("/maia");
+      navigate("/maia", { state: dataForMaia });
     } catch (error) {
       console.error("Error submitting data:", error);
     }

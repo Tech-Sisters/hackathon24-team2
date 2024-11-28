@@ -1,111 +1,127 @@
-import { useState } from "react";
-import {
-  Box,
-  Typography,
-  TextField,
-} from "@mui/material";
+import { useState, useEffect } from "react";
+import { Box, Typography, TextField } from "@mui/material";
 import HeaderMain from "../components/Landing/headerMain";
 import Footer from "../components/footer";
+import { useLocation } from "react-router-dom";
 
 export default function Chatbot() {
-  const [messages, setMessages] = useState([
-    { sender: "bot", text: "Hello, I am Maia. How can I assist you today?" },
-  ]);
+  const location = useLocation();
   const [userInput, setUserInput] = useState("");
+  const [startTimestamp, setStartTimestamp] = useState(new Date().toISOString());
+  const [sessionId, setSessionId] = useState(() => "session-" + Math.random().toString(36).substr(2, 9));
 
-  {
-    /* Check chatbot with mock data*/
-  }
-  // Mock data for bot responses
-  const mockResponses = [
-    { trigger: "hello", response: "Hi there! How can I help you today?" },
-    {
-      trigger: "sad",
-      response:
-        "I am sorry to hear that. Here is a comforting verse from the Quran: 'Indeed, with hardship comes ease.' (94:6)",
-    },
-    {
-      trigger: "happy",
-      response: "That's wonderful! Always remember to be grateful.",
-    },
-    {
-      trigger: "thank you",
-      response: "You're welcome! Let me know if I can assist further.",
-    },
-  ];
-  // Simulate bot response using mock data
-  const getMockResponse = (input) => {
-    const found = mockResponses.find((item) =>
-      input.toLowerCase().includes(item.trigger)
-    );
-    return found
-      ? found.response
-      : "I'm here to assist with any emotions or questions you have!";
-  };
+  // Initialize conversation as an array, not an object
+  const [conversation, setConversation] = useState([
+    { user: "", chatbot: "As-salamu alaykum, I am Maia. Please response." }
+  ]);
 
-  {
-    /*code for back end chat connectivity
+  const selectedActivityLabels = location?.state?.selectedActivityLabels || [];
+  const selectedEmotions = location?.state?.selectedEmotions || [];
+  const selectedFeedbackValue = location?.state?.selectedFeedbackValue || null;
+  const [responseSent, setResponseSent] = useState(false);
+
+  // Load conversation from sessionStorage when component mounts
+  useEffect(() => {
+    const savedConversation = sessionStorage.getItem("conversation");
+    if (savedConversation) {
+      setConversation(JSON.parse(savedConversation)); // Set saved conversation if available
+    }
+  }, []);
+
+  // Save conversation to sessionStorage whenever the conversation changes
+  useEffect(() => {
+    sessionStorage.setItem("conversation", JSON.stringify(conversation));
+  }, [conversation]);
+
+
+  // Handle sending a message
   const sendMessage = async () => {
     if (userInput.trim()) {
-      // Add user message to the messages list
-      const userMessage = { sender: "user", text: userInput };
-      setMessages((prevMessages) => [...prevMessages, userMessage]);
-
-      // Clear the input field
-      setUserInput("");
+      // Add user message to conversation
+      const newUserMessage = { user: userInput, chatbot: "" };
+      setConversation((prevConversation) => [...prevConversation, newUserMessage]);
 
       try {
-        // Send the user's message to the backend
-        const response = await fetch("backendurl", {
+        const dataForBackend = {
+          sessionId,
+          selectedActivityLabels,
+          selectedEmotions,
+          selectedFeedbackValue,
+          message: userInput,
+        };
+
+        const response = await fetch("http://127.0.0.1:5000/api/chat", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ message: userInput }),
+          body: JSON.stringify(dataForBackend),
         });
 
-        // Parse the response from the backend
-        const data = await response.json();
+        if (!response.ok) {
+          throw new Error("Failed to fetch response from the backend");
+        }
 
-        // Add the bot's response to the messages list
-        const botResponse = { sender: "bot", text: data.response };
-        setMessages((prevMessages) => [...prevMessages, botResponse]);
+        const data = await response.json();
+        const chatbotResponse = { user: "", chatbot: data.bot_response };
+        setConversation((prevConversation) => [...prevConversation, chatbotResponse]);
       } catch (error) {
         console.error("Error communicating with the backend:", error);
-        const errorMessage = {
-          sender: "bot",
-          text: "Sorry, I couldn't process your request. Please try again.",
-        };
-        setMessages((prevMessages) => [...prevMessages, errorMessage]);
+        const errorMessage = { user: "", chatbot: "Sorry, I couldn't process your request. Please try again." };
+        setConversation((prevConversation) => [...prevConversation, errorMessage]);
       }
     }
+
+    setUserInput(""); // Clear the input field after sending message
   };
-}
-  */
-  }
 
-  // Handle sending a message
-  const sendMessage = () => {
-    if (userInput.trim()) {
-      const newMessage = { sender: "user", text: userInput };
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
+  const saveConversationToDatabase = async () => {
+    const conversationData = {
+      sessionId,
+      startTimestamp,
+      selectedActivityLabels: location.state.selectedActivityLabels,
+      selectedEmotions: location.state.selectedEmotions,
+      selectedFeedbackValue: location.state.selectedFeedbackValue,
+      conversation: conversation,
+    };
 
-      // Simulate a bot response after the user sends a message
-      setTimeout(() => {
-        const botResponse = getMockResponse(userInput);
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { sender: "bot", text: botResponse },
-        ]);
-      }, 1000); // Simulate delay
+    console.log("Sending conversation data:", conversationData);  // Log the data you're sending to check if it's correct
+
+    try {
+      const response = await fetch("http://127.0.0.1:5000/api/save-conversation", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(conversationData),
+      });
+
+      if (!response.ok) throw new Error("Failed to save conversation data");
+      console.log("Conversation data saved successfully.");
+    } catch (error) {
+      console.error("Error saving conversation data:", error);
     }
-    setUserInput(""); // Clear input field
   };
+
+  useEffect(() => {
+    // Handle saving conversation before unload or when component unmounts
+    const handleBeforeUnload = async (event) => {
+      await saveConversationToDatabase(); // Wait for the async save to complete
+      event.preventDefault(); // This prevents the default unload action
+      event.returnValue = ""; // Standard message for some browsers
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      saveConversationToDatabase(); // Also save conversation on component unmount
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [conversation, sessionId, startTimestamp, location.state.selectedActivityLabels, location.state.selectedEmotions, location.state.selectedFeedbackValue]);
 
   return (
     <>
-    <HeaderMain />
-      {/* Maia Header */}
+      <HeaderMain />
       <Box
         sx={{
           padding: "16px",
@@ -114,7 +130,6 @@ export default function Chatbot() {
           fontSize: "24px",
           fontWeight: "bold",
           flexShrink: 0,
-
           display: "flex",
           justifyContent: "center",
           margin: "10px",
@@ -122,7 +137,7 @@ export default function Chatbot() {
       >
         Maia Chatbot
       </Box>
-      {/* Chat Response Presented */}
+
       <Box
         sx={{
           height: "60vh", // Adjust height as needed
@@ -132,33 +147,21 @@ export default function Chatbot() {
           borderRadius: "8px",
           padding: "16px",
           margin: "10px",
-          backgroundColor: "#fff", // Background for chat area
+          backgroundColor: "#fff",
           display: "flex",
           flexDirection: "column",
         }}
       >
-        {messages.map((message, index) => (
-          <Box
-            key={index}
-            sx={{
-              textAlign: message.sender === "user" ? "right" : "left",
-              margin: "10px",
-              padding: "8px",
-              borderRadius: "8px",
-              backgroundColor:
-                message.sender === "user" ? "#e0f7fa" : "#fce4ec",
-              alignSelf: message.sender === "user" ? "flex-end" : "flex-start",
-              maxWidth: "70%",
-            }}
-          >
+        {/* Render conversation messages */}
+        {conversation.map((message, index) => (
+          <Box key={index} sx={{ textAlign: message.user ? "right" : "left", margin: "10px", padding: "8px", borderRadius: "8px", backgroundColor: message.user ? "#e0f7fa" : "#fce4ec", alignSelf: message.user ? "flex-end" : "flex-start", maxWidth: "70%" }}>
             <Typography variant="body1">
-              <strong>{message.sender}:</strong> {message.text}
+              <strong>{message.user ? "User" : "Chatbot"}:</strong> {message.user || message.chatbot}
             </Typography>
           </Box>
         ))}
       </Box>
 
-      {/* Chat Input Area */}
       <Box
         sx={{
           padding: "8px",
