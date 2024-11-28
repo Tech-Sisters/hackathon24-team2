@@ -19,13 +19,13 @@ const emotionColors = {
   veryGood: "var(--veryGoodAccent)",
 };
 
-export default function LandingCard({ image, align, text, date, link }) {
+export default function LandingCard({ image, align, text, data, link }) {
   const navigate = useNavigate();
 
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
   const yesterdayString = yesterday.toISOString().split("T")[0];
-  const yesterdayEmotion = date && date[yesterdayString] ? date[yesterdayString] : "neutral"
+  const yesterdayEmotion = data && data[yesterdayString] ? data[yesterdayString] : "neutral"
 
   const emotionWord = emotionWords[yesterdayEmotion];
   const formattedText = text && text.includes("{}") ? text.replace("{}", emotionWord) : text;

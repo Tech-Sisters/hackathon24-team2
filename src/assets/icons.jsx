@@ -17,6 +17,7 @@ import Spirituality from "./icons/Spirituality.svg";
 import Travel from "./icons/Travel.svg";
 import Weather from "./icons/Weather.svg";
 import Work from "./icons/Work.svg";
+import Logo from "./Logo.svg";
 
 
 export const Icons = { 
@@ -39,4 +40,5 @@ export const Icons = {
     travel: Travel,
     weather: Weather,
     work: Work,
+    logo: Logo,
 };

@@ -17,6 +17,10 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    extraNotes: {
+      type: String,
+      required: false,
+    }
   },
   {
     timestamps: true,

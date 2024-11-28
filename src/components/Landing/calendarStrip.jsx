@@ -1,24 +1,23 @@
 import { format, startOfWeek, addDays } from 'date-fns';
 import "./landing.css"; 
 
+
+const emotionColors = {
+  veryBad: "var(--veryBad)",
+  bad: "var(--bad)",
+  neutral: "var(--neutral)",
+  good: "var(--good)",
+  veryGood: "var(--veryGood)",
+  white: "#fff"
+};
+
 // eslint-disable-next-line react/prop-types
 export default function CalendarStrip({ trackedData }) {
     const today = new Date();
-
     const startOfCurrentWeek = startOfWeek(today, { weekStartsOn: 0 });
-  
     const weekDays = Array.from({ length: 7 }, (_, i) =>
       addDays(startOfCurrentWeek, i)
     );
-
-  const emotionColors = {
-    veryBad: "var(--veryBad)",
-    bad: "var(--bad)",
-    neutral: "var(--neutral)",
-    good: "var(--good)",
-    veryGood: "var(--veryGood)",
-    white: "#fff"
-  };
 
   return (
     <div id="calendarStripContainer">
@@ -31,11 +30,11 @@ export default function CalendarStrip({ trackedData }) {
       </div>
       <div id="dateTiles">
         {weekDays.map((date) => {
-          const dateString = format(date, "yyyy-MM-dd");
+          const dateString = format(date, "yyyyMMdd");
           const emotion = trackedData[dateString] || "white"; 
           const tileColor = emotionColors[emotion];
-        //   const isToday = format(date, "yyyy-MM-dd") === format(today, "yyyy-MM-dd"); 
-        const isToday = format(date, "yyyy-MM-dd") === format("2024-11-29", "yyyy-MM-dd"); //dummy code lol
+        //   const isToday = format(date, "yyyyMMdd") === format(today, "yyyyMMdd"); 
+        const isToday = format(date, "yyyyMMdd") === format("2024-11-29", "yyyyMMdd"); //dummy code lol
 
           return (
             <div
