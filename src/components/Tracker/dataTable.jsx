@@ -3,15 +3,14 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { format, parse } from "date-fns";
 import "./tracker.css";
-
+import axios from "axios";
 const DataTable = ({ date, trackedData }) => {
   const [notes, setNotes] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     if (trackedData && date) {
-      const dataForDate =
-        trackedData[date] || trackedData.find((entry) => entry.date === date);
+      const dataForDate = trackedData[date];
       if (dataForDate) {
         setNotes(dataForDate.extraNotes || "");
       } else {
@@ -24,13 +23,20 @@ const DataTable = ({ date, trackedData }) => {
     setNotes(newNote);
   };
 
-  const handleSave = () => {
-    const dataForDate =
-      trackedData[date] || trackedData.find((entry) => entry.date === date);
+  const handleSave = async () => {
+    const dataForDate = trackedData[date];
     if (dataForDate) {
       dataForDate.extraNotes = notes;
-      alert("Notes saved successfully!");
-      navigate("/tracker");
+      //alert("Notes saved successfully!");
+      try {
+        await axios.post(
+          "http://localhost:3001/api/user-feelings/",
+          trackedData[date]
+        );
+        navigate("/tracker");
+      } catch (error) {
+        console.error("Error submitting data:", error);
+      }
     } else {
       console.error("No data found for the given date.");
     }
@@ -45,14 +51,13 @@ const DataTable = ({ date, trackedData }) => {
     formattedDate = "Invalid date";
   }
 
-  const dataForDate =
-    trackedData[date] || trackedData.find((entry) => entry.date === date);
+  const dataForDate = trackedData[date];
 
   if (!date || !dataForDate) {
     return <p>No data available for this date.</p>;
   }
 
-  const { feeling, emotions, activities, extraNotes } = dataForDate;
+  const { feeling, emotion, reason, extraNotes } = dataForDate;
 
   return (
     <div className="dataTable">
@@ -62,10 +67,10 @@ const DataTable = ({ date, trackedData }) => {
           <strong>Base Feeling (out of 5):</strong> {feeling || "N/A"}
         </p>
         <p>
-          <strong>Emotions:</strong> {emotions ? emotions : "N/A"}
+          <strong>Emotions:</strong> {emotion ? emotion.join(", ") : "N/A"}
         </p>
         <p>
-          <strong>Activities:</strong> {activities ? activities : "N/A"}
+          <strong>Activities:</strong> {reason ? reason.join(", ") : "N/A"}
         </p>
         <div>
           <strong>Extra Notes:</strong>
