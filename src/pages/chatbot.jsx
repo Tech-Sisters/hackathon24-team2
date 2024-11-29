@@ -9,6 +9,7 @@ import "../components/ChatBot/chatbot.css";
 
 export default function Chatbot() {
   const location = useLocation();
+  console.log("location", location)
   const [userInput, setUserInput] = useState("");
   const [startTimestamp, setStartTimestamp] = useState(
     new Date().toISOString()

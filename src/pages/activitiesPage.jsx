@@ -156,10 +156,11 @@ const ActivitiesPage = () => {
       reason: selectedActivitiesLabels,
     };
     const dataForMaia = {
-      selectedFeedbackValue: selectedFeedbackValue,
-      selectedEmotions: selectedEmotions, // Selected emotions
-      selectedActivityLabels: selectedActivitiesLabels, // Selected activities
+      selectedFeedbackValue: feeling,
+      selectedEmotions: emotion,
+      selectedActivityLabels: selectedActivitiesLabels,
     };
+    console.log("maia data", dataForMaia)
     try {
       console.log("here", postData);
       await axios.post("http://localhost:3001/api/user-feelings/", postData);
