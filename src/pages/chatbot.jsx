@@ -20,8 +20,7 @@ export default function Chatbot() {
   const [conversation, setConversation] = useState([
     {
       user: "",
-      chatbot:
-        "As-salamu alaykum! Just checking in—want to chat about your day?",
+      chatbot: "Just checking in—want to chat about your day?",
     },
   ]);
   const selectedActivityLabels = location?.state?.selectedActivityLabels || [];
@@ -54,7 +53,7 @@ export default function Chatbot() {
         setTimeout(() => {
           const chatbotResponse = {
             user: "",
-            chatbot: "I'm sorry to hear that.",
+            chatbot: `Wa alaykum as-salam! MashaAllah, it sounds like you've had a wonderful day filled with positive emotions!\nFeeling energised, excited, happy, and insightful is a beautiful blessing from Allah (SWT).\n\nThe Prophet Muhammad (peace be upon him) said:  “The believer’s shade on the Day of Resurrection will be his charity.” (Tirmidhi).  This reminds us that good deeds and positive feelings are intertwined. What specific activities brought you such joy and insight today? Sharing them might help us understand how to cultivate these positive feelings further, InShaAllah`,
           };
           setConversation((prevConversation) => [
             ...prevConversation,
@@ -63,12 +62,12 @@ export default function Chatbot() {
 
           // Set flag to wait for user's next input
           setWaitingForUserResponse(true);
-        }, 1000);
+        }, 2500);
       } else {
         setTimeout(() => {
           const chatbotResponse = {
             user: "",
-            chatbot: "Go for a walk.",
+            chatbot: `MashaAllah, that's wonderful!  Finding joy and peace in your hobbies is a beautiful thing.  Knitting sounds relaxing and allows you to connect with your creativity.  The Prophet Muhammad (peace be upon him) said:  “Indeed, Allah loves when one of you does a job perfectly.” (Baihaqi).Taking pride in your work, even a hobby, reflects a dedication to excellence which pleases Allah (SWT). How does knitting help you feel closer to Allah, and what other ways do you incorporate your faith into your daily life?`,
           };
           setConversation((prevConversation) => [
             ...prevConversation,
@@ -109,6 +108,7 @@ export default function Chatbot() {
       </Box>
       <Box className="inputBox">
         <TextField
+          style={{ whiteSpace: "pre-line" }}
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}

@@ -53,7 +53,7 @@ export default function Chatbot2() {
         setTimeout(() => {
           const chatbotResponse = {
             user: "",
-            chatbot: "I'm happy to hear that.",
+            chatbot: `Wa alaikum assalam. I'm so sorry to hear you had an extremely stressful day and are feeling angry and tired.  That sounds incredibly difficult. Remember Allah (SWT) says in the Quran:  "And seek help through patience and prayer; and indeed, it is difficult except for the humbly submissive [to Allah ]" (Quran 2:45). The companions of the Prophet (peace be upon him) faced immense hardships with unwavering faith.  Their resilience can inspire us. Can you tell me more about what happened at work yesterday?  Perhaps sharing and reflecting on the situation can help process your feelings and find a path forward, InShaAllah. Remember, even in anger and tiredness, turning to Allah (SWT) in prayer and seeking His help is crucial.`,
           };
           setConversation((prevConversation) => [
             ...prevConversation,
@@ -62,12 +62,12 @@ export default function Chatbot2() {
 
           // Set flag to wait for user's next input
           setWaitingForUserResponse(true);
-        }, 1000);
+        }, 2000);
       } else {
         setTimeout(() => {
           const chatbotResponse = {
             user: "",
-            chatbot: "Go for a  run.",
+            chatbot: "You're very welcome!",
           };
           setConversation((prevConversation) => [
             ...prevConversation,

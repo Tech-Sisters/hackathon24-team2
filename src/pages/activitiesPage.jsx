@@ -14,7 +14,6 @@ for (const path in modules) {
 }
 
 const ActivitiesPage = () => {
-
   const [selectedFeedback, setSelectedFeedback] = useState([]);
 
   const navigate = useNavigate();
@@ -26,16 +25,17 @@ const ActivitiesPage = () => {
   };
 
   // Log location.state to debug
-  console.log("Location State:", location.state)
+  console.log("Location State:", location.state);
 
-  const { selectedFeedbackValue, selectedEmotions } = location.state?.dataForActivities || {
+  const { selectedFeedbackValue, selectedEmotions } = location.state
+    ?.dataForActivities || {
     selectedFeedbackValue: "",
     selectedEmotions: [],
   };
 
   // Log the values to verify
   console.log("Selected Feedback Value in Activities:", selectedFeedbackValue);
-  console.log("Selected Emotions in Activities:", selectedEmotions)
+  console.log("Selected Emotions in Activities:", selectedEmotions);
 
   const activities = [
     {
@@ -142,9 +142,7 @@ const ActivitiesPage = () => {
 
   const handleBackNavigate = () => {
     navigate(-1);
-
   };
-
 
   const handleNavigate = async () => {
     const selectedActivitiesLabels = selectedFeedback.map(
@@ -160,7 +158,7 @@ const ActivitiesPage = () => {
       selectedEmotions: emotion,
       selectedActivityLabels: selectedActivitiesLabels,
     };
-    console.log("maia data", dataForMaia)
+    console.log("maia data", dataForMaia);
     try {
       console.log("here", postData);
       await axios.post("http://localhost:3001/api/user-feelings/", postData);
@@ -231,6 +229,14 @@ const ActivitiesPage = () => {
                     />
                   )
                 }
+                sx={{
+                  "&:hover": {
+                    transform: "scale(1.1)",
+                    backgroundColor: selectedFeedback.includes(index)
+                      ? activity.selectedColor
+                      : activity.color,
+                  },
+                }}
                 style={{
                   backgroundColor: selectedFeedback.includes(index)
                     ? activity.selectedColor
@@ -243,6 +249,9 @@ const ActivitiesPage = () => {
                   lineHeight: "140%",
                   letterSpacing: "0%",
                   margin: "0.5rem",
+                  cursor: "pointer",
+                  transition:
+                    "transform 0.2s ease-in-out, background-color 0.3s ease",
                 }}
               />
             </span>

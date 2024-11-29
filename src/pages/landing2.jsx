@@ -5,7 +5,7 @@ import HeaderMain from "../components/Landing/headerMain";
 import LandingCard from "../components/Landing/card";
 import Footer from "../components/footer";
 import { Carousel } from "../components/Landing/carousel";
-import CalendarStrip2 from "../components/Landing/calendarStrip copy";
+import CalendarStrip2 from "../components/Landing/calendarStrip2";
 
 // eslint-disable-next-line react/prop-types
 const Landing2 = ({ trackedData }) => {
