@@ -166,6 +166,13 @@ const mockTrackedData = [
         emotion: ["angry", "tired"],
         reason: ["work", "health"],
         extraNotes: "Felt angry and tired, likely due to health issues."
+    },
+    {
+        date: "20241129",
+        feeling: "good",
+        emotion: ["energised", "excited", "insightful", "energised"],
+        reason: ["colleagues", "weather", "hobbies"],
+        extraNotes: "Felt angry and tired, likely due to health issues."
     }
 ];
 

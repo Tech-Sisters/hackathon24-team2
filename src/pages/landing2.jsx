@@ -2,17 +2,17 @@ import bgPurple from "../assets/bg_purple.jpg";
 import bgGreen from "../assets/bg_green.jpg";
 
 import HeaderMain from "../components/Landing/headerMain";
-import CalendarStrip from "../components/Landing/calendarStrip";
 import LandingCard from "../components/Landing/card";
 import Footer from "../components/footer";
 import { Carousel } from "../components/Landing/carousel";
+import CalendarStrip2 from "../components/Landing/calendarStrip copy";
 
 // eslint-disable-next-line react/prop-types
-const Landing = ({ trackedData }) => {
+const Landing2 = ({ trackedData }) => {
   return (
     <div>
       <HeaderMain />
-      <CalendarStrip />
+      <CalendarStrip2 />
       <LandingCard
         text={"How are you feeling today?"}
         image={bgPurple}
@@ -31,4 +31,4 @@ const Landing = ({ trackedData }) => {
     </div>
   );
 };
-export default Landing;
+export default Landing2;
