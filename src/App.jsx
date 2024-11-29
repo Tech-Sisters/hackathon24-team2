@@ -87,10 +87,7 @@ function App() {
               path="/tracker"
               element={<Tracker trackedData={trackedDataObject} />}
             />
-            <Route
-              path="/tracker/:date"
-              element={<TrackedDay trackedData={mockTrackedData} />}
-            />
+            <Route path="/tracker/:date" element={<TrackedDay />} />
           </Routes>
         </div>
       </Router>

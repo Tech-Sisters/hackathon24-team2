@@ -35,8 +35,8 @@ export default function LandingCard({ image, align, text, data, link }) {
           <React.Fragment key={index}>
             {segment}
             {index < formattedText.split(emotionWord).length - 1 && (
-              <span style={{ color: emotionAccentColors[yesterdayEmotion] }}>
-                {emotionWord}
+              <span style={{ color: emotionAccentColors["bad"] }}>
+                {emotionWords["bad"]}
               </span>
             )}
           </React.Fragment>

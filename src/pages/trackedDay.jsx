@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { KeyboardArrowLeft } from "@mui/icons-material";
+import mockTrackedData from "../utils/mockData";
 // import axios from "axios";
 // import { useState, useEffect } from "react";
 
@@ -15,8 +16,8 @@ import { KeyboardArrowLeft } from "@mui/icons-material";
 //   const str = input.toString();
 //   return `${str.slice(0, 4)}-${str.slice(4, 6)}-${str.slice(6, 8)}`;
 // };
-// eslint-disable-next-line react/prop-types
-const TrackedDay = ({ trackedData }) => {
+
+const TrackedDay = () => {
   const navigate = useNavigate();
   const { date } = useParams();
   // const [trackedDayData, setTrackedDayData] = useState(null);
@@ -87,7 +88,7 @@ const TrackedDay = ({ trackedData }) => {
         <KeyboardArrowLeft sx={{ fontSize: "2rem" }} />
       </IconButton>
       <Box sx={{ flex: 1 }}>
-        <DataTable date={date} trackedData={trackedData} />
+        <DataTable date={date} trackedData={mockTrackedData} />
       </Box>
       <Footer />
     </>
