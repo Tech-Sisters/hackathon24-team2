@@ -183,6 +183,13 @@ const mockTrackedData = [
     reason: ["work", "health"],
     extraNotes: "Felt angry and tired, likely due to health issues.",
   },
+  {
+    date: "20241129",
+    feeling: "good",
+    emotion: ["energised", "excited", "insightful", "energised"],
+    reason: ["colleagues", "weather", "hobbies"],
+    extraNotes: "",
+  },
 ];
 
 const DataTable = ({ date }) => {
@@ -230,7 +237,7 @@ const DataTable = ({ date }) => {
     return <p>No data available for this date.</p>;
   }
 
-  const { feeling, emotion, reason, extraNotes } = dataForDate;
+  const { feeling, emotion, reason } = dataForDate;
 
   return (
     <div
@@ -262,7 +269,7 @@ const DataTable = ({ date }) => {
       <p>
         {`Thoughts I saved for later...`}
         <textarea
-          value={extraNotes}
+          value={notes}
           onChange={(e) => handleNoteChange(e.target.value)}
           placeholder="Add your notes here..."
           rows="4"
