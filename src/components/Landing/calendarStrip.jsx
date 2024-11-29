@@ -27,9 +27,10 @@ export default function CalendarStrip({ trackedData }) {
           const emotion = trackedData[dateString] || "white";
           const tileColor = emotionColors[emotion];
 
-          //   const isToday = format(date, "yyyyMMdd") === format(today, "yyyyMMdd");
           const isToday =
-            format(date, "yyyyMMdd") === format("2024-11-29", "yyyyMMdd"); //dummy code lol
+            format(date, "yyyyMMdd") === format(today, "yyyyMMdd");
+          // const isToday =
+          // format(date, "yyyyMMdd") === format("2024-11-29", "yyyyMMdd"); //dummy code lol
 
           return (
             <div
