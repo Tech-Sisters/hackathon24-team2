@@ -7,9 +7,6 @@ import {
   addDays,
   startOfWeek,
   endOfWeek,
-  isFuture,
-  isSameDay,
-  isBefore,
 } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { emotionColors } from "../../utils/constants";
@@ -21,12 +18,14 @@ const colors = {
 };
 
 const Calendar = ({ trackedData }) => {
-  const today = new Date();
+  // Hardset today as 29th November 2024
+  const today = new Date("2024-11-29");
   const navigate = useNavigate();
 
   const getDaysInMonthGrid = (month) => {
     const start = startOfWeek(startOfMonth(month), { weekStartsOn: 0 });
-    const end = addDays(endOfWeek(endOfMonth(month), { weekStartsOn: 0 }), 30);
+    const end = endOfWeek(addDays(endOfMonth(month), 14), { weekStartsOn: 0 });
+
     const days = [];
     for (let date = start; date <= end; date = addDays(date, 1)) {
       days.push(date);
@@ -46,9 +45,10 @@ const Calendar = ({ trackedData }) => {
         const dateString = format(date, "yyyyMMdd");
         const formattedDateForUrl = format(date, "yyyyMMdd");
         const emotion = trackedData[dateString];
-        const isToday = isSameDay(date, today);
-        const isFutureDate = isFuture(date);
-        const isPastDate = isBefore(date, today);
+
+        const isToday = format(date, "yyyyMMdd") === format(today, "yyyyMMdd");
+        const isFutureDate = date > today;
+        const isPastDate = date < today;
 
         let tileColor;
         if (isFutureDate) {
@@ -59,10 +59,9 @@ const Calendar = ({ trackedData }) => {
           tileColor = colors.bgSecondary;
         }
 
-        let showMonthName = false;
-        if (isFirstOfMonth || monthName !== currentMonth) {
+        const showMonthName = isFirstOfMonth || monthName !== currentMonth;
+        if (showMonthName) {
           currentMonth = monthName;
-          showMonthName = true;
         }
 
         return (
